@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+
+    {% block link %}
+
+    {% endblock link %}
+
+</head>
+<body>
+    {% include 'sample-templates/header.html' %}
+
+    {% block content %}
+
+    {% endblock content %}
+
+    {% include 'footer.html' %}
+</body>
+</html>
