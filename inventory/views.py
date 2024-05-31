@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from faker import Faker
 import random
 from .models import Category, Product, ProductCategory
+from .header import get_header_template_content
 
 
 # Create your views here.
@@ -179,4 +180,6 @@ def product(request):
     return render(request, 'product.html')
 
 def sample_template(request):
+    content = get_header_template_content()
+    print(content)
     return render(request,'sample-templates/sample-template-loader.html')

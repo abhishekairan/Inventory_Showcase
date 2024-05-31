@@ -12,8 +12,16 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
-class ProductCategory(Category):
+class ProductCategory(models.Model):
+    category_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
+    display_name = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    display = models.BooleanField(blank=False,default=True)
     main_category = models.ForeignKey(Category,on_delete=models.PROTECT,related_name="parent_category")
+    
+    def __str__(self):
+        return self.display_name
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
