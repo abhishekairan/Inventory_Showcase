@@ -180,6 +180,5 @@ def product(request):
     return render(request, 'product.html')
 
 def sample_template(request):
-    content = get_header_template_content()
-    print(content)
-    return render(request,'sample-templates/sample-template-loader.html')
+    context = get_header_template_content()
+    return render(request,'sample-templates/sample-template-loader.html',context={'categories': context})

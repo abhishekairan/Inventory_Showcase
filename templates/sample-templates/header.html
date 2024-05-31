@@ -84,111 +84,19 @@
             <a href="#" class="menu-title">Home</a>
           </li>
 
-
+          {% for category, productCategories in categories.items %}
           <li class="menu-category">
-            <a href="#" class="menu-title">Men's</a>
+            <a href="#" class="menu-title">{{category.display_name}}</a>
 
             <ul class="dropdown-list">
-
+              {% for productCategory in productCategories %}
               <li class="dropdown-item">
-                <a href="#">Shirt</a>
+                <a href="#">{{ productCategory.display_name }}</a>
               </li>
-
-              <li class="dropdown-item">
-                <a href="#">Shorts & Jeans</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Safety Shoes</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Wallet</a>
-              </li>
-
+              {% endfor %}
             </ul>
           </li>
-
-          <li class="menu-category">
-            <a href="#" class="menu-title">Women's</a>
-
-            <ul class="dropdown-list">
-
-              <li class="dropdown-item">
-                <a href="#">Dress & Frock</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Earrings</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Necklace</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Makeup Kit</a>
-              </li>
-
-            </ul>
-          </li>
-
-          <li class="menu-category">
-            <a href="#" class="menu-title">Jewelry</a>
-
-            <ul class="dropdown-list">
-
-              <li class="dropdown-item">
-                <a href="#">Earrings</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Couple Rings</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Necklace</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Bracelets</a>
-              </li>
-
-            </ul>
-          </li>
-
-          <li class="menu-category">
-            <a href="#" class="menu-title">Perfume</a>
-
-            <ul class="dropdown-list">
-
-              <li class="dropdown-item">
-                <a href="#">Clothes Perfume</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Deodorant</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Flower Fragrance</a>
-              </li>
-
-              <li class="dropdown-item">
-                <a href="#">Air Freshener</a>
-              </li>
-
-            </ul>
-          </li>
-
-          <li class="menu-category">
-            <a href="#" class="menu-title">Blog</a>
-          </li>
-
-          <li class="menu-category">
-            <a href="#" class="menu-title">Hot Offers</a>
-          </li>
-
+          {% endfor %}
         </ul>
 
       </div>
@@ -210,10 +118,11 @@
           <a href="#" class="menu-title">Home</a>
         </li>
 
+        {% for category, productCategories in categories.items %}
         <li class="menu-category">
 
           <button class="accordion-menu" data-accordion-btn>
-            <p class="menu-title">Men's</p>
+            <p class="menu-title">{{category.display_name}}</p>
 
             <div>
               <ion-icon name="add-outline" class="add-icon"></ion-icon>
@@ -223,26 +132,16 @@
 
           <ul class="submenu-category-list" data-accordion>
 
+            {% for productCategory in productCategories %}
             <li class="submenu-category">
-              <a href="#" class="submenu-title">Shirt</a>
+              <a href="#" class="submenu-title">{{productCategory.display_name}}</a>
             </li>
-
-            <li class="submenu-category">
-              <a href="#" class="submenu-title">Shorts & Jeans</a>
-            </li>
-
-            <li class="submenu-category">
-              <a href="#" class="submenu-title">Safety Shoes</a>
-            </li>
-
-            <li class="submenu-category">
-              <a href="#" class="submenu-title">Wallet</a>
-            </li>
+            {% endfor %}
 
           </ul>
 
         </li>
-
+        {% endfor %}
         <li class="menu-category">
 
           <button class="accordion-menu" data-accordion-btn>
@@ -342,13 +241,6 @@
 
         </li>
 
-        <li class="menu-category">
-          <a href="#" class="menu-title">Blog</a>
-        </li>
-
-        <li class="menu-category">
-          <a href="#" class="menu-title">Hot Offers</a>
-        </li>
 
       </ul>
 
