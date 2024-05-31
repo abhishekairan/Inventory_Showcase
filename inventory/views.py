@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from faker import Faker
 import random
-from .models import Category, Product
+from .models import Category, Product, ProductCategory
 
 
 # Create your views here.
@@ -11,34 +11,145 @@ def generate_data(request):
     fake = Faker()
 
     # Define product categories
-    categories = [
-        "Electronics",
-        "Clothing",
-        "Books",
-        "Home & Kitchen",
-        "Toys & Games",
-        "Sports & Outdoors",
-        "Beauty & Personal Care",
-        "Health & Household",
-        "Automotive",
-        "Grocery & Gourmet Food"
+    categories = {
+    "Electronics": [
+        "Smartphones",
+        "Laptops",
+        "Tablets",
+        "Headphones",
+        "Smartwatches",
+        "Digital Cameras",
+        "Bluetooth Speakers",
+        "Gaming Consoles",
+        "Televisions",
+        "Portable Chargers"
+    ],
+    "Clothing": [
+        "Men's T-Shirts",
+        "Women's Dresses",
+        "Children's Jackets",
+        "Men's Jeans",
+        "Women's Skirts",
+        "Baby Onesies",
+        "Women's Blouses",
+        "Men's Suits",
+        "Athletic Wear",
+        "Underwear & Socks"
+    ],
+    "Books": [
+        "Fiction Novels",
+        "Non-Fiction Books",
+        "Children's Books",
+        "Self-Help Books",
+        "Cookbooks",
+        "Science Fiction",
+        "Biographies",
+        "Historical Novels",
+        "Fantasy Books",
+        "Mystery & Thriller Books"
+    ],
+    "Home & Kitchen": [
+        "Cookware Sets",
+        "Blenders",
+        "Coffee Makers",
+        "Dishware Sets",
+        "Bedding Sets",
+        "Vacuum Cleaners",
+        "Air Purifiers",
+        "Cutlery Sets",
+        "Food Storage Containers",
+        "Toasters"
+    ],
+    "Toys & Games": [
+        "Action Figures",
+        "Board Games",
+        "Plush Toys",
+        "Puzzles",
+        "Lego Sets",
+        "Remote Control Cars",
+        "Dollhouses",
+        "Educational Toys",
+        "Outdoor Playsets",
+        "Building Blocks"
+    ],
+    "Sports & Outdoors": [
+        "Exercise Equipment",
+        "Camping Tents",
+        "Hiking Boots",
+        "Bicycles",
+        "Yoga Mats",
+        "Fishing Gear",
+        "Sports Apparel",
+        "Water Bottles",
+        "Tennis Rackets",
+        "Golf Clubs"
+    ],
+    "Beauty & Personal Care": [
+        "Skincare Products",
+        "Haircare Products",
+        "Makeup Kits",
+        "Perfumes",
+        "Nail Polish",
+        "Shaving Kits",
+        "Sunscreens",
+        "Bath Bombs",
+        "Hair Dryers",
+        "Electric Toothbrushes"
+    ],
+    "Health & Household": [
+        "Vitamins & Supplements",
+        "First Aid Kits",
+        "Cleaning Supplies",
+        "Air Fresheners",
+        "Blood Pressure Monitors",
+        "Thermometers",
+        "Laundry Detergent",
+        "Health Monitors",
+        "Humidifiers",
+        "Disinfectant Wipes"
+    ],
+    "Automotive": [
+        "Car Accessories",
+        "Car Care Kits",
+        "Tire Pressure Gauges",
+        "Car Covers",
+        "Jump Starters",
+        "GPS Systems",
+        "Car Seat Covers",
+        "Dashboard Cameras",
+        "Motor Oil",
+        "Windshield Wipers"
+    ],
+    "Grocery & Gourmet Food": [
+        "Snacks",
+        "Beverages",
+        "Organic Foods",
+        "Condiments",
+        "Spices",
+        "Pasta & Rice",
+        "Breakfast Cereals",
+        "Canned Foods",
+        "Baking Supplies",
+        "Gourmet Chocolates"
     ]
+}
 
-    def generate_random_product():
-        # Generate a random product name
-        product_name = fake.word().capitalize() + ' ' + fake.word().capitalize()
+    def generate_random_product(category):
+        # choicing a random product name from categories 
+        product_name = random.choice(categories[category])
 
         # Generate a random product cost between $5 and $500
         product_cost = round(random.uniform(5, 500), 2)
 
-        # Select a random category from the list
-        product_category = random.choice(categories)
-
-        return product_name, product_cost, product_category
+        return product_name, product_cost
 
     def generate_random_category_name():
         # Generate a random category name
-        return fake.word().capitalize()
+        return random.choice()
+    
+    def generate_random_sub_category_name(category):
+        # Generate a random category name
+        return random.choice(category)
 
     def generate_random_category_description():
         # Generate a random category description
@@ -49,17 +160,18 @@ def generate_data(request):
         category_name = generate_random_category_name()
         category_description = generate_random_category_description()
         return category_name, category_description
+    
+    def generate_random_boolean():
+        return random.choice([True,False])
 
-    # Generate and print 10 random products
-    # for index in range(10):
-    #     catdescription = generate_random_category_description()
-    #     Category.objects.create(name=categories[index],description=catdescription)
-    #     print(f"Category Name: {categories[index]}, Description: {catdescription} has been added successfully")
-    for index in range(10):
-        name, cost, category = generate_random_product()
-        Product.objects.create(name=name, cost=cost, category=Category.objects.get(name=random.choice(categories)),
-                               description=generate_random_category_description())
-        print(f"Product Name: {name}, Cost: ${cost}, Category: {category} has been added successfully")
+    for cate in categories:
+        description = generate_random_category_description()
+        display = generate_random_boolean()
+        cat_obj = Category.objects.create(name=cate,display_name=cate,description=description,display=display)
+        for subcat in categories[cate]:
+            description = generate_random_category_description()
+            display = generate_random_boolean()
+            ProductCategory.objects.create(name=subcat,display_name=subcat,description=description,display=display,main_category=cat_obj)
     return HttpResponse(f"Added new products successfully")
 
 

@@ -5,8 +5,14 @@ from inventory.models import *
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('category_id','name','description')
+    list_display = ('category_id','name','display_name','description','display')
     search_fields = ('name','catergory_id')
+
+@admin.register(ProductCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
+    list_display = ('category_id','name','display_name','description','main_category','display')
+    search_fields = ('name','catergory_id','parent')
+    
 
 @admin.register(Tag)
 class CategoryAdmin(admin.ModelAdmin):
