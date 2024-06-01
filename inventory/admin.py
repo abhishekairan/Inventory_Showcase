@@ -14,15 +14,10 @@ class SubCategoryAdmin(admin.ModelAdmin):
     search_fields = ('name','catergory_id','parent')
     
 
-@admin.register(Tag)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-
 @admin.register(Discount)
 class DiscountAdmin(admin.ModelAdmin):
-    list_display = ('name','percentage')
-    search_fields = ('name',)
+    list_display = ('value','discountType')
+    search_fields = ('value','discountType')
 
 
 class ProductImageInline(admin.TabularInline):
@@ -33,7 +28,7 @@ class ProductImageInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'cost', 'product_id', 'category', 'discount', 'created_at', 'updated_at')
     search_fields = ('product_id','name')
-    list_filter = ('category','tags','discount')
+    list_filter = ('category','discount')
     inlines = [ProductImageInline]
 
 

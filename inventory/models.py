@@ -23,28 +23,25 @@ class ProductCategory(models.Model):
     def __str__(self):
         return self.display_name
 
-class Tag(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
+    
 
 class Discount(models.Model):
-    name = models.CharField(max_length=100)
-    percentage = models.DecimalField(max_digits=5, decimal_places=2)
+    value = models.IntegerField()
+    discountType = models.CharField("Discount Type",'discountType',choices=[('%','%'),('₹','₹')],max_length=2,default='%')
 
     def __str__(self):
-        return f"{self.name} ({self.percentage}%)"
+        return str(self.value)
+    
 
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    cost = models.IntegerField()
     description = models.TextField()
     additional_details = models.TextField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag, blank=True)
+    # tags = models.ManyToManyField(Tag, blank=True)
     discount = models.ForeignKey(Discount, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

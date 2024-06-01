@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from faker import Faker
 import random
-from .models import Category, Product, ProductCategory
+from .models import Category, Product, ProductCategory, Discount
 from .header import get_header_template_content
 
 
@@ -165,14 +165,19 @@ def generate_data(request):
     def generate_random_boolean():
         return random.choice([True,False])
 
-    for cate in categories:
-        description = generate_random_category_description()
-        display = generate_random_boolean()
-        cat_obj = Category.objects.create(name=cate,display_name=cate,description=description,display=display)
-        for subcat in categories[cate]:
-            description = generate_random_category_description()
-            display = generate_random_boolean()
-            ProductCategory.objects.create(name=subcat,display_name=subcat,description=description,display=display,main_category=cat_obj)
+    # for cate in categories:
+    #     description = generate_random_category_description()
+    #     display = generate_random_boolean()
+    #     cat_obj = Category.objects.create(name=cate,display_name=cate,description=description,display=display)
+    #     for subcat in categories[cate]:
+    #         description = generate_random_category_description()
+    #         display = generate_random_boolean()
+    #         ProductCategory.objects.create(name=subcat,display_name=subcat,description=description,display=display,main_category=cat_obj)
+    
+    for discount in range(0,101,5):
+        Discount.objects.create(value=discount,discountType = '%')
+    for discount in range(100,1001,100):
+        Discount.objects.create(value=discount,discountType = '₹')
     return HttpResponse(f"Added new products successfully")
 
 
@@ -182,3 +187,9 @@ def product(request):
 def sample_template(request):
     context = get_header_template_content()
     return render(request,'sample-templates/sample-template-loader.html',context={'categories': context})
+
+
+
+def home(request):
+    header_context = get_header_template_content()
+    return render(request,'base.html',context={'categories':header_context,'title':'Home'})
