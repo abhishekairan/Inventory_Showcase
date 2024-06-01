@@ -409,7 +409,6 @@ body {
   left: 0;
   width: 100%;
   background-color: var(--white);
-  padding-block: 26px;
   z-index: 4;
 }
 
@@ -1082,6 +1081,8 @@ body {
  * responsive for larger than 575px screen
  */
 
+
+
 @media (min-width: 575px) {
 
   /**
@@ -1345,7 +1346,6 @@ body {
 
   .header-top {
     position: unset;
-    padding-block: 24px 0;
   }
 
   .header-top:is(.active, .header-hide) { all: unset; }
