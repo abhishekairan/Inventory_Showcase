@@ -11,10 +11,10 @@ def get_header_template_content():
     
     return context # -> {<Category: Clothing>: [<ProductCategory: Men's T-Shirts>, <ProductCategory: Children's Jackets>, <ProductCategory: Women's Skirts>, <ProductCategory: Men's Suits>, <ProductCategory: Athletic Wear>, <ProductCategory: Underwear & Socks>]}
 
-def get_new_product_section_context():
+def get_newArrival_product_section_context():
     
     context = {}
-    newProducts = Product.objects.all().order_by('-created_at')[:5]
+    newProducts = Product.objects.all().order_by('-created_at')[:10]
     for a in newProducts:
         try:
             images = ProductImage.objects.all().filter(product = a).filter(is_default = True)[0]
@@ -23,3 +23,7 @@ def get_new_product_section_context():
         context[a] = images
     print(context)
     return context
+
+def get_featured_product_section_context():
+    
+    context = {}
