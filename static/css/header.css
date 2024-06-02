@@ -262,6 +262,7 @@ body {
   padding-block-end: 15px;
   margin-block-end: -15px;
   scroll-snap-type: inline mandatory;
+  scroll-behavior: smooth;
 }
 
 .scrollbar-item {

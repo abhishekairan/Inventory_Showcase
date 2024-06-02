@@ -30,7 +30,11 @@ class Discount(models.Model):
     discountType = models.CharField("Discount Type",'discountType',choices=[('%','%'),('₹','₹')],max_length=2,default='%')
 
     def __str__(self):
-        return str(self.value)
+        if self.discountType == '%':
+            return f'{self.value}{self.discountType}'
+        else:
+            return f'{self.discountType}{self.value}'
+            
     
 
 
@@ -48,6 +52,16 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def get_discount_price(self):
+        if self.discount:
+            if self.discount.discountType == '%':
+                return self.cost - (self.cost * (self.discount.value/100))
+            else:
+                return self.cost - self.discount.value
+        else:
+            return self.cost
 
 
 class ProductImage(models.Model):

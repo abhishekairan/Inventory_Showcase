@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from faker import Faker
 import random
 from .models import Category, Product, ProductCategory, Discount
-from .header import get_header_template_content
+from .utils import get_header_template_content, get_new_product_section_context
 
 
 # Create your views here.
@@ -189,7 +189,11 @@ def sample_template(request):
     return render(request,'sample-templates/sample-template-loader.html',context={'categories': context})
 
 
-
 def home(request):
     header_context = get_header_template_content()
-    return render(request,'base.html',context={'categories':header_context,'title':'Home'})
+    product_section_context = get_new_product_section_context()
+    return render(request,'base.html',context={
+        'categories':header_context,
+        'product_section':product_section_context,
+        'title':'Home'
+    })
