@@ -165,14 +165,14 @@ def generate_data(request):
     def generate_random_boolean():
         return random.choice([True,False])
 
-    # for cate in categories:
-    #     description = generate_random_category_description()
-    #     display = generate_random_boolean()
-    #     cat_obj = Category.objects.create(name=cate,display_name=cate,description=description,display=display)
-    #     for subcat in categories[cate]:
-    #         description = generate_random_category_description()
-    #         display = generate_random_boolean()
-    #         ProductCategory.objects.create(name=subcat,display_name=subcat,description=description,display=display,main_category=cat_obj)
+    for cate in categories:
+        description = generate_random_category_description()
+        display = generate_random_boolean()
+        cat_obj = Category.objects.create(name=cate,display_name=cate,description=description,display=display)
+        for subcat in categories[cate]:
+            description = generate_random_category_description()
+            display = generate_random_boolean()
+            ProductCategory.objects.create(name=subcat,display_name=subcat,description=description,display=display,main_category=cat_obj)
     
     for discount in range(0,101,5):
         Discount.objects.create(value=discount,discountType = '%')
