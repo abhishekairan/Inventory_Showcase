@@ -18,13 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from inventory.views import generate_data, product, sample_template,home
+from inventory.views import generate_data, product, sample_template,home,products
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('generate_data', generate_data),
-    path('product',product),
+    path('product/<int:id>',product),
     path('sample-template',sample_template),
+    path('products/<str:filter_type>',products),
     path('',home),
     path('home',home)
 ]

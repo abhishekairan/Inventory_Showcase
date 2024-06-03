@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from faker import Faker
 import random
 from .models import Category, Product, ProductCategory, Discount
-from .utils import get_header_template_content, get_newArrival_product_section_context
+from .utils import get_header_template_content, get_newArrival_product_section_context, get_featured_product_section_context, get_product_context
 
 
 # Create your views here.
@@ -181,8 +181,13 @@ def generate_data(request):
     return HttpResponse(f"Added new products successfully")
 
 
-def product(request):
-    return render(request, 'product.html')
+def product(request,id:int):
+    header_context = get_header_template_content()
+    product_context = get_product_context(id)
+    return render(request, 'product.html',content_type={
+        'header_context': header_context,
+        "product_context": product_context
+    })
 
 def sample_template(request):
     context = get_header_template_content()
@@ -191,9 +196,26 @@ def sample_template(request):
 
 def home(request):
     header_context = get_header_template_content()
-    product_section_context = get_newArrival_product_section_context()
-    return render(request,'base.html',context={
-        'categories':header_context,
+    product_section_context = get_newArrival_product_section_context(10)
+    featured_product_section_context = get_featured_product_section_context(10)
+    return render(request,'home.html',context={
+        'header_context':header_context,
         'newArrival_product_section':product_section_context,
+        'featured_product_section': featured_product_section_context,
         'title':'Home'
+    })
+    
+    
+def products(request,filter_type: str):
+    header_context = get_header_template_content()
+    if filter_type=='new_arrival':
+        title = 'New Arrival'
+        product_context = get_newArrival_product_section_context(100)
+    if filter_type=='featured':
+        title = "featured"
+        product_context = get_featured_product_section_context(100)
+    return render(request,'products.html',context={
+        'title':title,
+        'header_context': header_context,
+        'products_list_context': product_context
     })

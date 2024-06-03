@@ -49,6 +49,7 @@ class Product(models.Model):
     discount = models.ForeignKey(Discount, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    featured = models.BooleanField(default=False,blank=False)
 
     def __str__(self):
         return self.name

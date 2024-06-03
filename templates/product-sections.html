@@ -5,13 +5,14 @@
 {% endblock link %}
 
 
+
 <section class="section shop" id="shop" aria-label="shop" data-section>
   <div class="container">
 
     <div class="title-wrapper">
       <h2 class="h2 section-title">New Arrival</h2>
 
-      <a href="#" class="btn-link">
+      <a href="/products/new_arrival" class="btn-link">
         <span class="span">Shop All Products</span>
 
         <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
@@ -25,7 +26,7 @@
 
           <div class="card-banner img-holder" style="--width: 540; --height: 720;">
             <img src="{{image.image.url}}" width="540" height="720" loading="lazy"
-              alt="Facial cleanser" class="img-cover">
+              alt="{{product.name}}" class="img-cover">
             {% if product.discount %}
             <span class="badge">-{{product.discount}}</span>
             {% endif %}
@@ -57,3 +58,60 @@
 
   </div>
 </section>
+
+
+
+
+<section class="section shop" id="shop" aria-label="shop" data-section>
+  <div class="container">
+
+    <div class="title-wrapper">
+      <h2 class="h2 section-title">Featured</h2>
+
+      <a href="/products/featured" class="btn-link">
+        <span class="span">Shop All Products</span>
+
+        <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+      </a>
+    </div>
+
+    <ul class="has-scrollbar">
+      {% for product,image in featured_product_section.items %}
+      <li class="scrollbar-item">
+        <div class="shop-card">
+
+          <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+            <img src="{{image.image.url}}" width="540" height="720" loading="lazy"
+              alt="{{product.name}}" class="img-cover">
+            {% if product.discount %}
+            <span class="badge">-{{product.discount}}</span>
+            {% endif %}
+          </div>
+
+          <div class="showcase-content">
+            
+            <a href="#" class="showcase-category">{{product.category.display_name}}</a>
+            
+            <a href="#">
+              <h3 class="showcase-title">{{product.name}}</h3>
+            </a>
+
+            <div class="price-box">
+              {% if product.discount %}
+              <p class="price">₹{{product.get_discount_price}}</p>
+              <del>₹{{product.cost}}</del>
+              {% else %}
+              <p class="price">₹{{product.cost}}</p>
+              {% endif %}
+            </div>
+            
+          </div>
+
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</section>
+

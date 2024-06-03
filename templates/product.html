@@ -1,59 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sneaker Product Page</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/product.css' %}">
-</head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">sneakers</div>
-            <ul class="nav-links">
-                <li><a href="#">Collections</a></li>
-                <li><a href="#">Men</a></li>
-                <li><a href="#">Women</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-            <div class="profile-cart">
-                <img src="cart-icon.png" alt="Cart">
-                <img src="profile-icon.png" alt="Profile" class="profile-icon">
-            </div>
-        </nav>
-    </header>
-    <main>
-        <div class="product-container">
-            <div class="product-image">
-                <img src="sneakers.jpg" alt="Fall Limited Edition Sneakers">
-            </div>
-            <div class="product-details">
-                <h2>SNEAKER COMPANY</h2>
-                <h1>Fall Limited Edition Sneakers</h1>
-                <p>These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the weather can offer.</p>
-                <div class="price">
-                    <span class="current-price">$125.00</span>
-                    <span class="discount">50%</span>
-                    <span class="original-price">$250.00</span>
-                </div>
-                <div class="cart-actions">
-                    <div class="quantity-selector">
-                        <button class="decrease">-</button>
-                        <input type="text" value="0">
-                        <button class="increase">+</button>
-                    </div>
-                    <button class="add-to-cart">Add to cart</button>
-                </div>
-            </div>
+{% extends "base.html" %}
+{% block link %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/product.css' %}">
+<script src="product.js"></script>
+
+{% endblock link %}
+
+{% block content %}
+<div class="product-detail-container">
+    {% for product,images in product_context.items %}
+    <div class="product-gallery">
+        <div class="thumbnail-container">
+            {% for image in images %}
+            <img src="{{image.alt_text}}" class="thumbnail" onclick="changeImage('{{image.image.url}}')">
+            {% endfor %}
         </div>
-        <div class="thumbnail-images">
-            <img src="sneaker1.jpg" alt="Sneaker thumbnail">
-            <img src="sneaker2.jpg" alt="Sneaker thumbnail">
-            <img src="sneaker3.jpg" alt="Sneaker thumbnail">
-            <img src="sneaker4.jpg" alt="Sneaker thumbnail">
+        <div class="main-image-container">
+            <img id="mainImage" src="{{image|first}}" alt="{{image.alt_text}}">
         </div>
-    </main>
-</body>
-</html>
+    </div>
+    <div class="product-details">
+        <h1>Unstoppable Battery Life</h1>
+        <p>36 Hrs Of Battery Life</p>
+        <div class="buttons">
+            <button class="btn add-to-cart">ADD TO CART</button>
+            <button class="btn buy-now">BUY NOW</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
