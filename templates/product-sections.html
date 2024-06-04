@@ -21,38 +21,40 @@
 
     <ul class="has-scrollbar">
       {% for product,image in newArrival_product_section.items %}
-      <li class="scrollbar-item">
-        <div class="shop-card">
+      <a href="/product/{{product.product_id}}">
+        <li class="scrollbar-item">
+          <div class="shop-card">
 
-          <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-            <img src="{{image.image.url}}" width="540" height="720" loading="lazy"
-              alt="{{product.name}}" class="img-cover">
-            {% if product.discount %}
-            <span class="badge">-{{product.discount}}</span>
-            {% endif %}
-          </div>
-
-          <div class="showcase-content">
-            
-            <a href="#" class="showcase-category">{{product.category.display_name}}</a>
-            
-            <a href="#">
-              <h3 class="showcase-title">{{product.name}}</h3>
-            </a>
-
-            <div class="price-box">
+            <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+              <img src="{{image.image.url}}" width="540" height="720" loading="lazy"
+                alt="{{product.name}}" class="img-cover">
               {% if product.discount %}
-              <p class="price">₹{{product.get_discount_price}}</p>
-              <del>₹{{product.cost}}</del>
-              {% else %}
-              <p class="price">₹{{product.cost}}</p>
+              <span class="badge">-{{product.discount}}</span>
               {% endif %}
             </div>
-            
-          </div>
 
-        </div>
-      </li>
+            <div class="showcase-content">
+              
+              <a href="#" class="showcase-category">{{product.category.display_name}}</a>
+              
+              <a href="#">
+                <h3 class="showcase-title">{{product.name}}</h3>
+              </a>
+
+              <div class="price-box">
+                {% if product.discount %}
+                <p class="price">₹{{product.get_discount_price}}</p>
+                <del>₹{{product.cost}}</del>
+                {% else %}
+                <p class="price">₹{{product.cost}}</p>
+                {% endif %}
+              </div>
+              
+            </div>
+
+          </div>
+        </li>
+      </a>
       {% endfor %}
     </ul>
 
@@ -77,38 +79,40 @@
 
     <ul class="has-scrollbar">
       {% for product,image in featured_product_section.items %}
-      <li class="scrollbar-item">
-        <div class="shop-card">
+      <a href="/product/{{product.product_id}}">
+        <li class="scrollbar-item">
+          <div class="shop-card">
 
-          <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-            <img src="{{image.image.url}}" width="540" height="720" loading="lazy"
-              alt="{{product.name}}" class="img-cover">
-            {% if product.discount %}
-            <span class="badge">-{{product.discount}}</span>
-            {% endif %}
-          </div>
-
-          <div class="showcase-content">
-            
-            <a href="#" class="showcase-category">{{product.category.display_name}}</a>
-            
-            <a href="#">
-              <h3 class="showcase-title">{{product.name}}</h3>
-            </a>
-
-            <div class="price-box">
+            <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+              <img src="{{image.image.url}}" width="540" height="720" loading="lazy"
+                alt="{{product.name}}" class="img-cover">
               {% if product.discount %}
-              <p class="price">₹{{product.get_discount_price}}</p>
-              <del>₹{{product.cost}}</del>
-              {% else %}
-              <p class="price">₹{{product.cost}}</p>
+              <span class="badge">-{{product.discount}}</span>
               {% endif %}
             </div>
-            
-          </div>
 
-        </div>
-      </li>
+            <div class="showcase-content">
+              
+              <a href="#" class="showcase-category">{{product.category.display_name}}</a>
+              
+              <a href="#">
+                <h3 class="showcase-title">{{product.name}}</h3>
+              </a>
+
+              <div class="price-box">
+                {% if product.discount %}
+                <p class="price">₹{{product.get_discount_price}}</p>
+                <del>₹{{product.cost}}</del>
+                {% else %}
+                <p class="price">₹{{product.cost}}</p>
+                {% endif %}
+              </div>
+              
+            </div>
+
+          </div>
+        </li>
+      </a>
       {% endfor %}
     </ul>
 

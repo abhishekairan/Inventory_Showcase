@@ -7,21 +7,32 @@
 {% endblock link %}
 
 <div class="container">
-    <h1>New Arrival</h1>
+    
+    <div class="title-wrapper">
+        <h2 class="h2 section-title">All Products</h2>
+  
+        <a href="/products/all_product" class="btn-link">
+          <span class="span">Shop All Products</span>
+  
+          <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+        </a>
+    </div>
     <div id="product-grid" class="product-grid">
         {% for product, image in products_list_context.items %}
         <div class="product-card">
-            <img src="{{image.image.url}}" alt="{{product.name}}">
-            <div class="details">
-                <h2>{{product.name}}</h2>
-                <p>{{product.description}}</p>
-                {% if product.discount %}
-                <div class="price">₹{{product.get_discount_price}} <span class="original-price">₹{{product.cost}}</span></div>
-                <div class="discount">-{{product.discount}}</div>
-                {% else %}
-                <div class="price">₹{{product.cost}}</div>
-                {% endif %}
-            </div>
+            <a href="/product/{{product.product_id}}">
+                <img src="{{image.image.url}}" alt="{{product.name}}">
+                <div class="details">
+                    <h2>{{product.name}}</h2>
+                    <p>{{product.description}}</p>
+                    {% if product.discount %}
+                    <div class="price">₹{{product.get_discount_price}} <span class="original-price">₹{{product.cost}}</span></div>
+                    <div class="discount">-{{product.discount}}</div>
+                    {% else %}
+                    <div class="price">₹{{product.cost}}</div>
+                    {% endif %}
+                </div>
+            </a>
             <div class="badge">{{product.category.display_name}}</div>
         </div>
         {% endfor %}

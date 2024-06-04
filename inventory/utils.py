@@ -52,6 +52,20 @@ def get_featured_product_section_context(limit: int = 0):
         context[product] = get_product_default_image(product)
     return context
 
+        
+
+
+def get_all_product_context(limit:int = 0):
+    context = {}
+    if limit != 0:
+        allproducts = Product.objects.all()[:limit]
+    else:
+        allproducts = Product.objects.all()
+    for product in allproducts:
+        context[product] = get_product_default_image(product)
+    return context
+        
+
 
 def get_product_context(id:int):
     context = {}

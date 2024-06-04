@@ -3,7 +3,7 @@
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/product.css' %}">
-<script src="product.js"></script>
+<script src="{% static "js/product.js" %}"></script>
 
 {% endblock link %}
 
@@ -13,16 +13,18 @@
     <div class="product-gallery">
         <div class="thumbnail-container">
             {% for image in images %}
-            <img src="{{image.alt_text}}" class="thumbnail" onclick="changeImage('{{image.image.url}}')">
+            <img src="{{image.image.url}}" class="thumbnail" onclick="changeImage('{{image.image.url}}')">
             {% endfor %}
         </div>
         <div class="main-image-container">
-            <img id="mainImage" src="{{image|first}}" alt="{{image.alt_text}}">
+            {% with first_image=images|first %}
+            <img id="mainImage" src="{{first_image.image.url}}" alt="{{first_image.alt_text}}">
+            {% endwith %}
         </div>
     </div>
     <div class="product-details">
-        <h1>Unstoppable Battery Life</h1>
-        <p>36 Hrs Of Battery Life</p>
+        <h1>{{product.name}}</h1>
+        <p>{{product.description}}</p>
         <div class="buttons">
             <button class="btn add-to-cart">ADD TO CART</button>
             <button class="btn buy-now">BUY NOW</button>
