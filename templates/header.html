@@ -86,12 +86,12 @@
 
           {% for category, productCategories in header_context.items %}
           <li class="menu-category">
-            <a href="#" class="menu-title">{{category.display_name}}</a>
+            <a href="/categorys/{{category.category_id}}" class="menu-title">{{category.display_name}}</a>
 
             <ul class="dropdown-list">
               {% for productCategory in productCategories %}
               <li class="dropdown-item">
-                <a href="#">{{ productCategory.display_name }}</a>
+                <a href="/category/{{productCategory.category_id}}">{{ productCategory.display_name }}</a>
               </li>
               {% endfor %}
             </ul>

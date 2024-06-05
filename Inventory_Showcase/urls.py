@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from inventory.views import generate_data, product_content, sample_template,home,products
+from inventory.views import generate_data, product_content, sample_template,home,products,category,categorys
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +26,8 @@ urlpatterns = [
     path('product/<int:id>',product_content),
     path('sample-template',sample_template),
     path('products/<str:filter_type>',products),
+    path('category/<int:id>',category),
+    path('categorys/<int:id>',categorys),
     path('',home),
     path('home',home)
 ]

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from faker import Faker
 import random
 from .models import Category, Product, ProductCategory, Discount
-from .utils import get_header_template_content, get_newArrival_product_section_context, get_featured_product_section_context, get_product_context, get_all_product_context
+from .utils import get_header_template_content, get_newArrival_product_section_context, get_featured_product_section_context, get_product_context, get_all_product_context,get_category_products_context
 
 
 # Create your views here.
@@ -226,3 +226,29 @@ def products(request,filter_type: str=None):
         'header_context': header_context,
         'products_list_context': product_context
     })
+    
+def categorys(request,id:int):
+    categorysObject = Category.objects.get(category_id=id)
+    category_context = get_all_product_context(category=categorysObject)
+    # print(f"category_context: {category_context}")
+    header_context = get_header_template_content()
+    return render(request,'products.html',context={
+        'title':categorysObject.name,
+        'products_list_context': category_context,
+        'header_context':header_context,
+        'product_page_title':categorysObject.display_name
+    })
+    
+def category(request,id:int):
+    categoryObject = ProductCategory.objects.get(category_id=id)
+    # print(categoryObject)
+    category_context = get_all_product_context(category=categoryObject)
+    # print(f"category_context: {category_context}")
+    header_context = get_header_template_content()
+    return render(request,'products.html',context={
+        'title':categoryObject.name,
+        'products_list_context': category_context,
+        'header_context':header_context,
+        'product_page_title':categoryObject.display_name
+    })
+    

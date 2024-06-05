@@ -1,4 +1,6 @@
 from .models import Category, ProductCategory, Product, ProductImage
+from typing import Union
+from django.db.models import Q
 
 
 def get_header_template_content():
@@ -55,12 +57,20 @@ def get_featured_product_section_context(limit: int = 0):
         
 
 
-def get_all_product_context(limit:int = 0):
+def get_all_product_context(limit:int = 0,category: Union[ProductCategory,Category,None]=None):
+    print(category)
     context = {}
-    if limit != 0:
-        allproducts = Product.objects.all()[:limit]
+    if category != None:
+        if type(category) == ProductCategory:
+            allproducts = Product.objects.filter(category=category)
+        else:
+            allproducts = Product.objects.filter(category__main_category=category)
     else:
         allproducts = Product.objects.all()
+    
+    if limit != 0:
+        allproducts = allproducts[:limit]
+        
     for product in allproducts:
         context[product] = get_product_default_image(product)
     return context
@@ -72,4 +82,11 @@ def get_product_context(id:int):
     product = Product.objects.filter(product_id = id)[0]
     context[product] = get_product_images(product)
     print(context)
+    return context
+
+
+def get_category_products_context(category: Union[Category,ProductCategory]):
+    context = {}
+    product_context = get_all_product_context(category=category)
+    context[category] = product_context
     return context
