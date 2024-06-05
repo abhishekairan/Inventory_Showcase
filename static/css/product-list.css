@@ -26,7 +26,6 @@
     overflow: hidden;
     width: 220px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
     position: relative;
 }
 
@@ -74,11 +73,11 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: #4caf50;
+    background-color: var(--hoockers-green);
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 12px;
+    font-weight: var(--fw-700);
 }
 
 .pagination {
@@ -99,4 +98,13 @@
 
 .pagination #page-number {
     font-size: 16px;
+}
+
+
+/* Media Query */
+
+@media (max-width: 575px){
+    .product-grid {
+        justify-content: center;
+    }
 }

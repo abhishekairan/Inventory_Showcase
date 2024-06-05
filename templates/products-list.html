@@ -22,18 +22,29 @@
         <div class="product-card">
             <a href="/product/{{product.product_id}}">
                 <img src="{{image.image.url}}" alt="{{product.name}}">
-                <div class="details">
-                    <h2>{{product.name}}</h2>
-                    <p>{{product.description}}</p>
-                    {% if product.discount %}
-                    <div class="price">₹{{product.get_discount_price}} <span class="original-price">₹{{product.cost}}</span></div>
-                    <div class="discount">-{{product.discount}}</div>
-                    {% else %}
-                    <div class="price">₹{{product.cost}}</div>
-                    {% endif %}
-                </div>
+                {% if product.discount %}
+                <span class="badge">-{{product.discount}}</span>
+                {% endif %}
             </a>
-            <div class="badge">{{product.category.display_name}}</div>
+                
+            <div class="showcase-content">
+              
+                <a href="/category/{{product.category.category_id}}" class="showcase-category">{{product.category.display_name}}</a>
+                
+                <a href="/product/{{product.product_id}}">
+                  <h3 class="showcase-title">{{product.name}}</h3>
+                </a>
+  
+                <div class="price-box">
+                  {% if product.discount %}
+                  <p class="price">₹{{product.get_discount_price}}</p>
+                  <del>₹{{product.cost}}</del>
+                  {% else %}
+                  <p class="price">₹{{product.cost}}</p>
+                  {% endif %}
+                </div>
+                
+              </div>
         </div>
         {% endfor %}
     </div>

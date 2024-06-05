@@ -135,6 +135,7 @@ del { color: var(--sonic-silver); }
   position: absolute;
   top: 20px;
   left: 20px;
+  padding: 5px 10px;
 }
 
 .shop-card .card-content {
