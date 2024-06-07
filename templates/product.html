@@ -8,26 +8,33 @@
 {% endblock link %}
 
 {% block content %}
-<div class="product-detail-container">
+<div class="product-container">
     {% for product,images in product_context.items %}
-    <div class="product-gallery">
-        <div class="thumbnail-container">
+    <div class="image-gallery">
+        <div class="thumbnail-images">
             {% for image in images %}
-            <img src="{{image.image.url}}" class="thumbnail" onclick="changeImage('{{image.image.url}}')">
+            <img src="{{image.image.url}}" alt="{{product.name}}" onclick="changeImage('{{image.image.url}}')">
             {% endfor %}
         </div>
-        <div class="main-image-container">
-            {% with first_image=images|first %}
-            <img id="mainImage" src="{{first_image.image.url}}" alt="{{first_image.alt_text}}">
+        <div class="main-image">
+            {% with default_image=images|first %}
+            <img id="mainProductImage" src="{{default_image.image.url}}" alt="{{product.name}}">
             {% endwith %}
         </div>
     </div>
     <div class="product-details">
         <h1>{{product.name}}</h1>
+        <div class="price">
+            <span class="current-price">₹{{product.get_discount_price}}</span>
+            <span class="original-price">₹{{product.cost}}</span>
+        </div>
         <p>{{product.description}}</p>
-        <div class="buttons">
-            <button class="btn add-to-cart">ADD TO CART</button>
-            <button class="btn buy-now">BUY NOW</button>
+        <div class="additional-info">
+            <a href="/category/{{product.category.category_id}}">Category: Clothing</a>
+            {% comment %} <p>Availability: <span>180 Products In Stock</span></p> {% endcomment %}
+        </div>
+        <div class="actions">
+            <button class="btn add-to-cart">Order on Whatsapp</button>
         </div>
     </div>
     {% endfor %}
