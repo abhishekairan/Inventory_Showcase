@@ -26,6 +26,7 @@ urlpatterns = [
     path('product/<int:id>',product_content),
     path('sample-template',sample_template),
     path('products/<str:filter_type>',products),
+    path('products/',products,name='products'),
     path('category/<int:id>',category),
     path('categorys/<int:id>',categorys),
     path('',home),

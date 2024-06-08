@@ -35,11 +35,14 @@
         </button>
 
         <div class="input-wrapper">
-          <input type="search" name="search" placeholder="Search product" class="search-field">
+          <form method="GET" action="{% url "products" %}">
+            {% comment %} {% csrf_token %} {% endcomment %}
+            <input type="search" name="s" placeholder="Search product" class="search-field">
 
-          <button class="search-submit" aria-label="search">
-            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
-          </button>
+            <button class="search-submit" aria-label="search">
+              <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </form>
         </div>
 
         <a href="#" class="logo">

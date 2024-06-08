@@ -1,9 +1,10 @@
+import random
+from faker import Faker
 from django.shortcuts import render
 from django.http import HttpResponse
-from faker import Faker
-import random
+from django.core.handlers.wsgi import WSGIRequest as Request
 from .models import Category, Product, ProductCategory, Discount
-from .utils import get_header_template_content, get_newArrival_product_section_context, get_featured_product_section_context, get_product_context, get_all_product_context,get_category_products_context
+from .utils import get_header_template_content, get_newArrival_product_section_context, get_featured_product_section_context, get_product_context, get_all_product_context,get_category_products_context,get_searched_product_context
 
 
 # Create your views here.
@@ -209,9 +210,15 @@ def home(request):
     })
     
     
-def products(request,filter_type: str=None):
+def products(request: Request,filter_type: str=None):
     header_context = get_header_template_content()
-    if filter_type=='new_arrival':
+    title=''
+    product_context={}
+    if request.method == "GET":
+        search = request.GET.get('s')
+        product_context = get_searched_product_context(search)
+        title = f"Results for {search}"
+    elif filter_type=='new_arrival':
         title = 'New Arrival'
         product_context = get_newArrival_product_section_context(100)
     elif filter_type=='featured':

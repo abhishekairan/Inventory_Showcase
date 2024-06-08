@@ -90,3 +90,11 @@ def get_category_products_context(category: Union[Category,ProductCategory]):
     product_context = get_all_product_context(category=category)
     context[category] = product_context
     return context
+
+
+def get_searched_product_context(search_query: str):
+    context = {}
+    product_context = Product.objects.all().filter(Q(name__icontains=search_query) | Q(description__icontains = search_query))
+    for product in product_context:
+        context[product] = get_product_default_image(product)
+    return context
