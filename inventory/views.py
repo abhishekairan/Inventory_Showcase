@@ -200,6 +200,7 @@ def home(request):
     product_section_context = get_newArrival_product_section_context(10)
     featured_product_section_context = get_featured_product_section_context(10)
     product_list_context = get_all_product_context()
+    print(product_section_context)
     return render(request,'home.html',context={
         'header_context':header_context,
         'newArrival_product_section':product_section_context,
@@ -214,11 +215,7 @@ def products(request: Request,filter_type: str=None):
     header_context = get_header_template_content()
     title=''
     product_context={}
-    if request.method == "GET":
-        search = request.GET.get('s')
-        product_context = get_searched_product_context(search)
-        title = f"Results for {search}"
-    elif filter_type=='new_arrival':
+    if filter_type=='new_arrival':
         title = 'New Arrival'
         product_context = get_newArrival_product_section_context(100)
     elif filter_type=='featured':
@@ -227,6 +224,11 @@ def products(request: Request,filter_type: str=None):
     elif filter_type=="all_product":
         title = "All Products"
         product_context = get_all_product_context()
+    elif request.method == "GET":
+        search = request.GET.get('s')
+        product_context = get_searched_product_context(search)
+        title = f"Results for {search}"
+    
     return render(request,'products.html',context={
         'title':title,
         'product_page_title':title,
@@ -248,9 +250,7 @@ def categorys(request,id:int):
     
 def category(request,id:int):
     categoryObject = ProductCategory.objects.get(category_id=id)
-    # print(categoryObject)
     category_context = get_all_product_context(category=categoryObject)
-    # print(f"category_context: {category_context}")
     header_context = get_header_template_content()
     return render(request,'products.html',context={
         'title':categoryObject.name,

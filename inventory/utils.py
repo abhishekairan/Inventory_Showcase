@@ -15,16 +15,6 @@ def get_header_template_content():
 
 
 
-def get_product_default_image(product: Product):
-    try:
-        images = ProductImage.objects.all().filter(product = product).filter(is_default = True)[0]
-    except:
-        try:
-            images = ProductImage.objects.all().filter(product = product)[0]
-        except:
-            images = None
-    return images
-
 
 def get_product_images(product: Product):
     images = ProductImage.objects.all().filter(product= product).order_by('-is_default')
@@ -32,34 +22,26 @@ def get_product_images(product: Product):
 
 
 def get_newArrival_product_section_context(limit:int=0):
-    context = {}
     if limit == 0:
         newProducts = Product.objects.all().order_by('-created_at')
     else:
         newProducts = Product.objects.all().order_by('-created_at')[:limit]
-    for a in newProducts:
-        context[a] = get_product_default_image(a)
-    print(context)
-    return context
+    return newProducts
 
 
 
 def get_featured_product_section_context(limit: int = 0):
-    context = {}
     if limit == 0:
         featuredProducts = Product.objects.all().order_by('-featured')
     else:
         featuredProducts = Product.objects.all().order_by('-featured')[:limit]
-    for product in featuredProducts:
-        context[product] = get_product_default_image(product)
-    return context
+    return featuredProducts
 
         
 
 
 def get_all_product_context(limit:int = 0,category: Union[ProductCategory,Category,None]=None):
     print(category)
-    context = {}
     if category != None:
         if type(category) == ProductCategory:
             allproducts = Product.objects.filter(category=category)
@@ -70,10 +52,7 @@ def get_all_product_context(limit:int = 0,category: Union[ProductCategory,Catego
     
     if limit != 0:
         allproducts = allproducts[:limit]
-        
-    for product in allproducts:
-        context[product] = get_product_default_image(product)
-    return context
+    return allproducts
         
 
 
@@ -92,9 +71,8 @@ def get_category_products_context(category: Union[Category,ProductCategory]):
     return context
 
 
-def get_searched_product_context(search_query: str):
-    context = {}
+def get_searched_product_context(search_query):
+    if search_query==None:
+        return 'none'
     product_context = Product.objects.all().filter(Q(name__icontains=search_query) | Q(description__icontains = search_query))
-    for product in product_context:
-        context[product] = get_product_default_image(product)
-    return context
+    return product_context

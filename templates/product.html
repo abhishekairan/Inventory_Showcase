@@ -17,9 +17,7 @@
             {% endfor %}
         </div>
         <div class="main-image">
-            {% with default_image=images|first %}
-            <img id="mainProductImage" src="{{default_image.image.url}}" alt="{{product.name}}">
-            {% endwith %}
+            <img id="mainProductImage" src="{{product.default_image.image.url}}" alt="{{product.name}}">
         </div>
     </div>
     <div class="product-details">

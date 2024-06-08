@@ -20,13 +20,13 @@
     </div>
 
     <ul class="has-scrollbar">
-      {% for product,image in newArrival_product_section.items %}
+      {% for product in newArrival_product_section %}
       <a href="/product/{{product.product_id}}">
         <li class="scrollbar-item">
           <div class="shop-card">
 
             <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-              <img src="{{image.image.url}}" width="540" height="720" loading="lazy"
+              <img src="{{product.default_image.image.url}}" width="540" height="720" loading="lazy"
                 alt="{{product.name}}" class="img-cover">
               {% if product.discount %}
               <span class="badge">-{{product.discount}}</span>
@@ -78,13 +78,13 @@
     </div>
 
     <ul class="has-scrollbar">
-      {% for product,image in featured_product_section.items %}
+      {% for product in featured_product_section %}
       <a href="/product/{{product.product_id}}">
         <li class="scrollbar-item">
           <div class="shop-card">
 
             <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-              <img src="{{image.image.url}}" width="540" height="720" loading="lazy"
+              <img src="{{product.default_image.image.url}}" width="540" height="720" loading="lazy"
                 alt="{{product.name}}" class="img-cover">
               {% if product.discount %}
               <span class="badge">-{{product.discount}}</span>

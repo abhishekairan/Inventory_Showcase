@@ -63,6 +63,19 @@ class Product(models.Model):
                 return self.cost - self.discount.value
         else:
             return self.cost
+    
+    @property
+    def default_image(self):
+        default_image = ProductImage.objects.filter(product = self, is_default = True)
+        if default_image.exists():
+            return default_image[0]
+        else:
+            try:
+                default_image = ProductImage.objects.filter(product = self)[0]
+            except:
+                default_image = ProductImage.objects.filter(product = self)
+        return default_image
+                
 
 
 class ProductImage(models.Model):
