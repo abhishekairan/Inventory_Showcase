@@ -36,7 +36,6 @@
 
         <div class="input-wrapper">
           <form method="GET" action="{% url "products" %}">
-            {% comment %} {% csrf_token %} {% endcomment %}
             <input type="search" name="s" placeholder="Search product" class="search-field">
 
             <button class="search-submit" aria-label="search">
@@ -51,15 +50,17 @@
 
         <div class="header-actions">
 
-          <button class="header-action-btn" aria-label="user">
+          {% if not request.user.is_authenticated %}
+          <a class="header-action-btn" aria-label="user" href="/login">
             <ion-icon name="person-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
-          </button>
+          </a>
+          {% endif %}
 
+          {% if request.user.is_authenticated %}
           <button class="header-action-btn" aria-label="favourite item">
-            <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
-
-            <span class="btn-badge">0</span>
+            <ion-icon name="laptop-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
           </button>
+          {% endif %}
 
           <button class="header-action-btn" aria-label="cart item">
             <data class="btn-text" value="0">$0.00</data>

@@ -16,22 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls.static import static
-from django.conf import settings
-from inventory.views import generate_data, product_content, sample_template,home,products,category,categorys
+from .views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('generate_data', generate_data),
-    path('product/<int:id>',product_content),
-    path('sample-template',sample_template),
-    path('products/<str:filter_type>',products),
-    path('products/',products,name='products'),
-    path('category/<int:id>',category),
-    path('categorys/<int:id>',categorys),
-    path('',home),
-    path('home',home),
-    path('',include('dashboard.urls'))
+    path('login/',login),
+    path('dashboard/',dashboard)
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/dashboard/dashboard.css" %}">
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="{% static "js/dashboard/dashboard.js" %}"></script>
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidepanel has-scrollbar">
+            <span class="logo">
+                <a href="#" class="logo">
+                    <img src="/static/Media/resource/logo.png" width="179" height="26" alt="Glowing">
+                </a>
+            </span>
+        <div class="main-content">
+
+            <ul class="models-list">
+        
+                <li class="model">
+        
+                  <button class="model-info" data-accordion-btn>
+                    <p class="model-title">Product</p>
+        
+                    <div>
+                      <ion-icon name="chevron-down-outline" class="add-icon"></ion-icon>
+                      <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+                    </div>
+                  </button>
+        
+                  <ul class="model-action-list" data-accordion>
+        
+                    <li class="model-action">
+                      <a href="#" class="model-action-title">Add Product</a>
+                    </li>
+        
+                  </ul>
+        
+                </li>
+        
+              </ul>
+        </div>
+    </div>
+</body>
+</html>
