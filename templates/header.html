@@ -57,9 +57,9 @@
           {% endif %}
 
           {% if request.user.is_authenticated %}
-          <button class="header-action-btn" aria-label="favourite item">
+          <a class="header-action-btn" aria-label="favourite item" href='/dashboard'>
             <ion-icon name="laptop-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
-          </button>
+          </a>
           {% endif %}
 
           <button class="header-action-btn" aria-label="cart item">

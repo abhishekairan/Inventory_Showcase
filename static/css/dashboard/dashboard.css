@@ -8,14 +8,15 @@
 .dashboard-container .sidepanel{
     flex-direction: column;
     align-items: center;
-    background: var(--ocean-green);
+    background: #060606;
     width: 15vw;
     height: 100vh;
 }
 .sidepanel .logo{
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 250px;
+    height: 100px;
     margin: 10px;
 }
 .sidepanel .main-content{
@@ -26,14 +27,41 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    transition: 0.5s ease-in-out;
     align-items: center;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
 }
+.model-info .sideline{
+    width: 2px;
+    height: 60px;
+    background: white;
+    transform: translateY(60px) scale(0%);
+    visibility: hidden;
+}
+.model-info:hover{
+    transform: scale(110%);
+}
+.model-info:hover .model-icon{
+    transition: 0.2s ease-in-out;
+    transform: rotate(-90deg);
+}
+.model-info:hover .sideline{
+    transition: 0.2s;
+    transform: translateY(0) scale(100%);
+    visibility: visible;
+}
+
 .model-info .model-title{
-    color: var(--onyx);
+    color: var(--white);
     font-size: var(--fs-4);
     font-weight: var(--weight-500);
     padding: 12px 0;
+    font-family: var(--ff-urbanist);
 }
+
+
 
 .model-info.active .add-icon,
 .model-info .remove-icon { display: none; }
@@ -48,7 +76,7 @@
     max-height: 0;
     overflow: hidden;
     visibility: hidden;
-    transition: 0.5s ease-in-out;
+    transition: 0.5s ease;
 }
 
 .model-action-list.active {
@@ -59,7 +87,7 @@
 .model-action-title {
     padding: 6px 0;
     font-size: var(--fs-5);
-    color: var(--sonic-silver);
+    color: var(--eerie-black);
     font-weight: var(--weight-300);
 }
   
@@ -67,3 +95,11 @@
     color: var(--davys-gray); 
 }
   
+
+
+
+/* Media Quries */
+
+@media (max-width: 575px){
+    
+}

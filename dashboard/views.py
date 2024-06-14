@@ -33,6 +33,6 @@ def login(request: Request):
                     
                     
                     
-# @login_required(login_url='/login/')
+@login_required(login_url='login')
 def dashboard(request):
     return render(request, 'dashboard/dashboard.html')
