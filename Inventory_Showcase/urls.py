@@ -30,7 +30,7 @@ urlpatterns = [
     path('category/<int:id>',category),
     path('categorys/<int:id>',categorys),
     path('',home),
-    path('home',home),
+    path('home',home,name='home'),
     path('',include('dashboard.urls'))
 ]
 
