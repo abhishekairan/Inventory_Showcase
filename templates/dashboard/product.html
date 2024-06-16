@@ -1,0 +1,101 @@
+{% extends "dashboard/dashboard.html" %}
+
+
+{% block link %}
+{% load static %}
+<link rel="stylesheet" href="{% static "css/dashboard/product.css" %}">
+{% endblock link %}
+
+
+{% block dashboard-containt %}
+
+<div class="overview-cards">
+    <a href="{% url "dashboard-product" %}">
+        <div class="card">
+            <div class="card-icon">
+                <span class="icon"><img width="100" height="100" src="https://img.icons8.com/pastel-glyph/100/FD7E14/cardboard-box.png" alt="Products"/></span> 
+            </div>
+            <div class="card-title">
+                <h2>Total Product</h2>
+            </div>
+            <div class="card-info">
+                <h3>{{product_count}}</h3>
+            </div>
+        </div></a>
+        
+    <a href="{% url "dashboard-product" %}">
+        <div class="card">
+            <div class="card-icon">
+                <span class="icon"><img width="100" height="100" src="https://img.icons8.com/pastel-glyph/100/FD7E14/cardboard-box.png" alt="Products"/></span> 
+            </div>
+            <div class="card-title">
+                <h2>Featured Product</h2>
+            </div>
+            <div class="card-info">
+                <h3>{{featured_product_count}}</h3>
+            </div>
+        </div></a>
+</div>
+
+
+<div class="overview-lists">
+    <div class="list-title">
+        <div class="title">
+            <h3>Product List</h3>
+        </div>
+        <div class="filters">
+            <select name="Discount" id="Discount">
+                {% for Discount in discounts %}
+                <option value="{{Discount}}">{{Discount}}</option>
+                {% endfor %}
+            </select>
+            <div class="search">
+                <form method="GET" action="">
+                <input type="search" name="s" placeholder="Search product" class="search-field">
+                </form>
+            </div>
+        </div>
+    </div>
+    <table class="project-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Cost</th>
+                <th>Discount</th>
+                <th>Featured</th>
+                <th>Last Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr data-url="{% url "dashboard" %}">
+                <td>{{product.product_id}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.cost}}</td>
+                <td>{{product.discount}}</td>
+                {% if product.featured %}
+                <td><img width="24" height="24" src="https://img.icons8.com/color/48/checked--v1.png" alt="checked--v1"/></td>
+                {% else %}
+                <td><img width="24" height="24" src="https://img.icons8.com/color/48/cancel--v1.png" alt="cancel--v1"/></td>
+                {% endif %}
+                <td>{{product.updated_at}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        
+const data = '{{products}}'
+const rdata = JSON.parse(data).replace('&lt;','"').replace('&gt','"')
+console.log(rdata)
+    </script>
+
+
+{% endblock dashboard-containt %}
+
+{% block script %}
+    <script src="{% static "js/dashboard/product.js" %}"></script>
+{% endblock script %}

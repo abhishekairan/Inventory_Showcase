@@ -31,6 +31,7 @@
                 </a>
             </span>
             <div class="main-content">
+                {% comment %} Home model {% endcomment %}
                 <ul class="models-list">
                     <li class="model">
                         <a class="model-info" data-accordion-btn href="{% url "dashboard" %}">
@@ -42,7 +43,20 @@
                         </a>
                     </li>
                 </ul>
+                {% comment %} Product model {% endcomment %}
                 <ul class="models-list">
+                    <li class="model">
+                        <a class="model-info" data-accordion-btn href="{% url "dashboard-product" %}">
+                            <div class="sideline"></div>
+                            <p class="model-title">Products</p>
+                            <div class="model-icon">
+                                <ion-icon name="chevron-down-outline" class="add-icon"></ion-icon>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                {% comment %} Categoires Model {% endcomment %}
+                <ul class="models-list"> 
                     <li class="model">
                         <a class="model-info" data-accordion-btn href="{% url "dashboard" %}">
                             <div class="sideline"></div>
@@ -53,28 +67,19 @@
                         </a>
                     </li>
                 </ul>
+                {% comment %} Tag model {% endcomment %}
                 <ul class="models-list">
                     <li class="model">
                         <a class="model-info" data-accordion-btn href="{% url "dashboard" %}">
                             <div class="sideline"></div>
-                            <p class="model-title">Sub-Categories</p>
+                            <p class="model-title">Tags</p>
                             <div class="model-icon">
                                 <ion-icon name="chevron-down-outline" class="add-icon"></ion-icon>
                             </div>
                         </a>
                     </li>
                 </ul>
-                <ul class="models-list">
-                    <li class="model">
-                        <a class="model-info" data-accordion-btn href="{% url "dashboard" %}">
-                            <div class="sideline"></div>
-                            <p class="model-title">Products</p>
-                            <div class="model-icon">
-                                <ion-icon name="chevron-down-outline" class="add-icon"></ion-icon>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
+                {% comment %} User model {% endcomment %}
                 <ul class="models-list">
                     <li class="model">
                         <a class="model-info" data-accordion-btn href="{% url "dashboard" %}">
@@ -93,7 +98,7 @@
     <main>
         {% block dashboard-containt %}
         <div class="overview-cards">
-            <a href="">
+            <a href="{% url "dashboard-product" %}">
             <div class="card">
                 <div class="card-icon">
                     <span class="icon"><img width="100" height="100" src="https://img.icons8.com/pastel-glyph/100/FD7E14/cardboard-box.png" alt="Products"/></span> 
@@ -102,7 +107,7 @@
                     <h2>Total Product</h2>
                 </div>
                 <div class="card-info">
-                    <h3>20</h3>
+                    <h3>{{product_count}}</h3>
                 </div>
             </div></a>
             <a href="">

@@ -1,4 +1,4 @@
-from .models import Category, ProductCategory, Product, ProductImage
+from .models import Category, ProductCategory, Product, ProductImage, Discount
 from typing import Union
 from django.db.models import Q
 
@@ -76,3 +76,7 @@ def get_searched_product_context(search_query):
         return 'none'
     product_context = Product.objects.all().filter(Q(name__icontains=search_query) | Q(description__icontains = search_query))
     return product_context
+
+def get_discount():
+    discount = Discount.objects.all()
+    return discount

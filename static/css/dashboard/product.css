@@ -1,0 +1,73 @@
+.overview-lists {
+    box-shadow: 2px 2px 10px 10px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    width: 80vw;
+    border-radius: 15px;
+    height: auto;
+}
+.list-title{
+    display: grid;
+    grid-template-areas: 'title filters';
+    height: 100%;
+    width: 100%;
+}
+.list-title .title{
+    grid-area: title;
+    font-size: 24px;
+    color: black;
+}
+.list-title .filters{
+    grid-area: filters;
+    justify-self: end;
+}
+
+.filters {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.filters select {
+    padding: 10px 15px;
+    border: 1px solid #333;
+    border-radius: 50px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    width: 100px;
+}
+
+.search-field {
+    width: 270px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 50px;
+    padding: 8px 24px;
+    outline: none;
+    /* transition: var(--transition-1); */
+}
+
+.project-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.project-table th, .project-table td {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    color: #333;
+}
+
+.project-table th {
+    font-weight: bold;
+}
+.project-table tbody tr {
+    cursor: pointer;
+}

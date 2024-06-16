@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login as userlogin, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from inventory.utils import *
 
 # Create your views here.
 
@@ -35,4 +36,22 @@ def login(request: Request):
                     
 @login_required(login_url='login')
 def dashboard(request):
-    return render(request, 'dashboard/dashboard.html')
+    product_count = get_all_product_context().count()
+    context = {
+        'product_count': product_count,
+    }
+    return render(request, 'dashboard/dashboard.html',context=context)
+
+
+@login_required(login_url='login')
+def product(request: Request):
+    product = get_all_product_context()
+    featured_product = product.filter(featured=True)
+    discounts = get_discount()
+    context = {
+        'product_count': len(product),
+        'featured_product_count': len(featured_product),
+        'products': product,
+        'discounts': discounts
+    }
+    return render(request,'dashboard/product.html',context=context)
