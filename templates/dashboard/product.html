@@ -44,14 +44,23 @@
             <h3>Product List</h3>
         </div>
         <div class="filters">
-            <select name="Discount" id="Discount">
+
+            {% comment %} <select name="Discount" id="discount">
                 {% for Discount in discounts %}
                 <option value="{{Discount}}">{{Discount}}</option>
                 {% endfor %}
+            </select> {% endcomment %}
+            
+            <select name="featured" id="featured">
+                <option value="None" disabled selected>Select your option</option>
+                <option value="True">True</option>
+                <option value="False">False</option>
             </select>
+            
             <div class="search">
-                <form method="GET" action="">
-                <input type="search" name="s" placeholder="Search product" class="search-field">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                <input type="search" name="s" placeholder="Search product" class="search-field" id="search_field">
                 </form>
             </div>
         </div>
@@ -68,7 +77,7 @@
                 <th>Last Updated</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="product-list">
             {% for product in products %}
             <tr data-url="{% url "dashboard" %}">
                 <td>{{product.product_id}}</td>
@@ -86,16 +95,12 @@
             {% endfor %}
         </tbody>
     </table>
-    <script>
-        
-const data = '{{products}}'
-const rdata = JSON.parse(data).replace('&lt;','"').replace('&gt','"')
-console.log(rdata)
-    </script>
 
 
 {% endblock dashboard-containt %}
 
 {% block script %}
-    <script src="{% static "js/dashboard/product.js" %}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="{% static "js/dashboard/product.js" %}"></script>
+<script>console.log('{% url "search" %}')</script>
 {% endblock script %}

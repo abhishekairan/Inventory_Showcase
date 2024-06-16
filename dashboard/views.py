@@ -5,6 +5,9 @@ from django.contrib.auth import login as userlogin, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from inventory.utils import *
+from django.http import JsonResponse
+from django.db.models import Q
+from django.core.serializers import serialize
 
 # Create your views here.
 
@@ -55,3 +58,18 @@ def product(request: Request):
         'discounts': discounts
     }
     return render(request,'dashboard/product.html',context=context)
+
+
+
+def search(request: Request):
+    if request.method == "POST":
+        search_query = request.POST.get('inputval')
+        featured = request.POST.get('featuredval')
+        print(search_query)
+        print(featured)
+        products = get_searched_product_context(search_query,featured)
+        response_data={
+            'message':'success',
+            'input_value': serialize('json',products)
+        }
+        return JsonResponse(response_data,safe=False)

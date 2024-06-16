@@ -71,10 +71,12 @@ def get_category_products_context(category: Union[Category,ProductCategory]):
     return context
 
 
-def get_searched_product_context(search_query):
-    if search_query==None:
-        return 'none'
-    product_context = Product.objects.all().filter(Q(name__icontains=search_query) | Q(description__icontains = search_query))
+def get_searched_product_context(search_query,featured=None):
+    product_context = Product.objects.all()
+    if search_query!=None:
+        product_context = product_context.filter(Q(name__icontains=search_query) | Q(description__icontains = search_query))
+    if featured!=None:
+        product_context = product_context.filter(featured=featured)
     return product_context
 
 def get_discount():

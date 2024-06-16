@@ -21,5 +21,6 @@ from .views import *
 urlpatterns = [
     path('login/',login,name="login"),
     path('dashboard/',dashboard, name="dashboard"),
-    path('dashboard/product',product,name='dashboard-product')
+    path('dashboard/product',product,name='dashboard-product'),
+    path('search/',search,name='search')
 ]
