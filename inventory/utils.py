@@ -1,7 +1,7 @@
 from .models import Category, ProductCategory, Product, ProductImage, Discount
 from typing import Union
 from django.db.models import Q
-
+from django.contrib.auth.models import User
 
 def get_header_template_content():
     
@@ -88,6 +88,14 @@ def get_categories():
     categories = Category.objects.all()
     return categories
 
+def get_tags():
+    tags = ProductCategory.objects.all()
+    return tags
+
+def get_user():
+    users = User.objects.all()
+    return users
+
 def get_searched_category_context(search_query,display=None):
     categories = Category.objects.all()
     if search_query!=None:
@@ -96,3 +104,18 @@ def get_searched_category_context(search_query,display=None):
         categories = categories.filter(display=display)
         # print('Products got filtered by featured')
     return categories
+
+
+def get_product_categories():
+    tags = ProductCategory.objects.all()
+    return tags
+
+def get_searched_tags_context(search_query,display=None):
+    tags = ProductCategory.objects.all()
+    print(display)
+    if search_query!=None:
+        tags = tags.filter(Q(name__icontains=search_query) | Q(description__icontains = search_query))
+    if display in ['True','False']:
+        tags = tags.filter(display=display)
+        print('Products got filtered by featured')
+    return tags

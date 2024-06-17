@@ -70,7 +70,7 @@
                 {% comment %} Tag model {% endcomment %}
                 <ul class="models-list">
                     <li class="model">
-                        <a class="model-info" data-accordion-btn href="{% url "dashboard" %}">
+                        <a class="model-info" data-accordion-btn href="{% url "dashboard-tags" %}">
                             <div class="sideline"></div>
                             <p class="model-title">Tags</p>
                             <div class="model-icon">
@@ -119,7 +119,7 @@
                     <h2>Total Categories</h2>
                 </div>
                 <div class="card-info">
-                    <h3>20</h3>
+                    <h3>{{category_count}}</h3>
                 </div>
             </div></a>
             <a href="">
@@ -131,7 +131,7 @@
                     <h2>Total Tags</h2>
                 </div>
                 <div class="card-info">
-                    <h3>20</h3>
+                    <h3>{{tags_count}}</h3>
                 </div>
             </div></a>
             <a href="">
@@ -143,7 +143,7 @@
                     <h2>Total Users</h2>
                 </div>
                 <div class="card-info">
-                    <h3>2</h3>
+                    <h3>{{user_count}}</h3>
                 </div>
             </div></a>
         </div>

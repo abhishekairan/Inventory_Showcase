@@ -40,8 +40,14 @@ def login(request: Request):
 @login_required(login_url='login')
 def dashboard(request):
     product_count = get_all_product_context().count()
+    category_count = get_categories().count()
+    tags_count = get_tags().count()
+    user_count = get_user().count()
     context = {
         'product_count': product_count,
+        'category_count': category_count,
+        'tags_count': tags_count,
+        'user_count': user_count,
     }
     return render(request, 'dashboard/dashboard.html',context=context)
 
@@ -71,6 +77,17 @@ def category(request: Request):
     return render(request,'dashboard/category.html',context=context)
 
 
+@login_required(login_url='login')
+def tags(request: Request):
+    tags = get_tags()
+    context = {
+        'tags_count': len(tags),
+        'display_tags': len(tags.filter(display= True)),
+        'tags': tags,
+    }
+    return render(request,'dashboard/tags.html',context=context)
+
+
 
 def search_product(request: Request):
     if request.method == "POST":
@@ -93,6 +110,20 @@ def search_category(request: Request):
         # print(search_query)
         # print(display)
         category = get_searched_category_context(search_query,display)
+        response_data={
+            'message':'success',
+            'input_value': serialize('json',category)
+        }
+        return JsonResponse(response_data,safe=False)
+    
+    
+def search_tags(request: Request):
+    if request.method == "POST":
+        search_query = request.POST.get('inputval')
+        display = request.POST.get('featuredval')
+        # print(search_query)
+        # print(display)
+        category = get_searched_tags_context(search_query,display)
         response_data={
             'message':'success',
             'input_value': serialize('json',category)

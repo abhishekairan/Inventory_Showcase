@@ -23,6 +23,8 @@ urlpatterns = [
     path('dashboard/',dashboard, name="dashboard"),
     path('dashboard/product',product,name='dashboard-product'),
     path('dashboard/category',category,name='dashboard-category'),
+    path('dashboard/tags',tags,name='dashboard-tags'),
     path('search/product/',search_product,name='search-product'),
-    path('search/category/',search_category,name='search-category')
+    path('search/category/',search_category,name='search-category'),
+    path('search/tags/',search_tags,name='search-tags'),
 ]
