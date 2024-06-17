@@ -83,3 +83,16 @@ def get_searched_product_context(search_query,featured=None):
 def get_discount():
     discount = Discount.objects.all()
     return discount
+
+def get_categories():
+    categories = Category.objects.all()
+    return categories
+
+def get_searched_category_context(search_query,display=None):
+    categories = Category.objects.all()
+    if search_query!=None:
+        categories = categories.filter(Q(name__icontains=search_query) | Q(description__icontains = search_query))
+    if display in ['True','False']:
+        categories = categories.filter(display=display)
+        # print('Products got filtered by featured')
+    return categories

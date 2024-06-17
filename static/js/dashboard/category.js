@@ -20,23 +20,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function renderpoducts(response){
     var product = Array.isArray(response) ? response : [response]
-    console.log(product)
+    // console.log(product)
     var productListElement = $('#product-list');
     productListElement.empty();
     if(JSON.parse(product[0].input_value).length > 0){
-        JSON.parse(product[0].input_value).forEach(function(product){
-            // console.log(product)
-            const featured_icon = product.fields.featured ? '<img width="24" height="24" src="https://img.icons8.com/color/48/checked--v1.png" alt="checked--v1"/>' : '<img width="24" height="24" src="https://img.icons8.com/color/48/cancel--v1.png" alt="cancel--v1"/>';
+        JSON.parse(product[0].input_value).forEach(function(category){
+            console.log(category)
+            const featured_icon = category.fields.display ? '<img width="24" height="24" src="https://img.icons8.com/color/48/checked--v1.png" alt="checked--v1"/>' : '<img width="24" height="24" src="https://img.icons8.com/color/48/cancel--v1.png" alt="cancel--v1"/>';
             var product_row = `
                 <tr data-url="{% url "dashboard" %}">
-                    <td>${product.pk}</td>
-                    <td>${product.fields.name}</td>
-                    <td>${product.fields.description}</td>
-                    <td>${product.fields.category}</td>
-                    <td>${product.fields.cost}</td>
-                    <td>${product.fields.discount}</td>
+                    <td>${category.pk}</td>
+                    <td>${category.fields.name}</td>
+                    <td>${category.fields.display_name}</td>
+                    <td>${category.fields.description}</td>
                     <td>${featured_icon}</td>
-                    <td>${product.fields.updated_at}</td>
                 </tr>
             `;
             productListElement.append(product_row)
@@ -49,11 +46,11 @@ function ajaxCall(){
     var featured_value = $('#featured').val();
     // console.log(inputVal)
     $.ajax({
-        url: '/search/product/',
+        url: '/search/category/',
         method: 'POST',
         data: {
             'inputval': inputVal,
-            'featuredval': featured_value,
+            'displayval': featured_value,
             'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val(),
         },
         success: function(response){

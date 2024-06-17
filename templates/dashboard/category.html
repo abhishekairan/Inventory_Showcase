@@ -10,29 +10,29 @@
 {% block dashboard-containt %}
 
 <div class="overview-cards">
-    <a href="{% url "dashboard-product" %}">
+    <a href="{% url "dashboard-category" %}">
         <div class="card">
             <div class="card-icon">
                 <span class="icon"><img width="100" height="100" src="https://img.icons8.com/pastel-glyph/100/FD7E14/cardboard-box.png" alt="Products"/></span> 
             </div>
             <div class="card-title">
-                <h2>Total Product</h2>
+                <h2>Total Categories</h2>
             </div>
             <div class="card-info">
-                <h3>{{product_count}}</h3>
+                <h3>{{category_count}}</h3>
             </div>
         </div></a>
         
-    <a href="{% url "dashboard-product" %}">
+    <a href="{% url "dashboard-category" %}">
         <div class="card">
             <div class="card-icon">
                 <span class="icon"><img width="100" height="100" src="https://img.icons8.com/pastel-glyph/100/FD7E14/cardboard-box.png" alt="Products"/></span> 
             </div>
             <div class="card-title">
-                <h2>Featured Product</h2>
+                <h2>Display Categories</h2>
             </div>
             <div class="card-info">
-                <h3>{{featured_product_count}}</h3>
+                <h3>{{display_category}}</h3>
             </div>
         </div></a>
 </div>
@@ -52,7 +52,7 @@
             </select> {% endcomment %}
             
             <select name="featured" id="featured">
-                <option value="None" disabled selected>Select your option</option>
+                <option value="None" disabled selected>Display Category</option>
                 <option value="True">True</option>
                 <option value="False">False</option>
             </select>
@@ -70,29 +70,23 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Display Name</th>
                 <th>Description</th>
-                <th>Category</th>
-                <th>Cost</th>
-                <th>Discount</th>
-                <th>Featured</th>
-                <th>Last Updated</th>
+                <th>Display</th>
             </tr>
         </thead>
         <tbody id="product-list">
-            {% for product in products %}
+            {% for category in categories %}
             <tr data-url="{% url "dashboard" %}" class="product-tr">
-                <td>{{product.product_id}}</td>
-                <td>{{product.name}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.category.main_category}}/{{product.category}}</td>
-                <td>{{product.cost}}</td>
-                <td>{{product.discount}}</td>
-                {% if product.featured %}
+                <td>{{category.category_id}}</td>
+                <td>{{category.name}}</td>
+                <td>{{category.display_name}}</td>
+                <td>{{category.description}}</td>
+                {% if category.display %}
                 <td><img width="24" height="24" src="https://img.icons8.com/color/48/checked--v1.png" alt="checked--v1"/></td>
                 {% else %}
                 <td><img width="24" height="24" src="https://img.icons8.com/color/48/cancel--v1.png" alt="cancel--v1"/></td>
                 {% endif %}
-                <td>{{product.updated_at}}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -102,5 +96,5 @@
 {% endblock dashboard-containt %}
 
 {% block script %}
-<script src="{% static "js/dashboard/product.js" %}"></script>
+<script src="{% static "js/dashboard/category.js" %}"></script>
 {% endblock script %}

@@ -62,18 +62,17 @@ def product(request: Request):
 
 @login_required(login_url='login')
 def category(request: Request):
-    categories = get_all_product_context()
-    discounts = get_discount()
+    categories = get_categories()
     context = {
-        'product_count': len(categories),
-        'products': product,
-        'discounts': discounts
+        'category_count': len(categories),
+        'display_category': len(categories.filter(display= True)),
+        'categories': categories,
     }
-    return render(request,'dashboard/product.html',context=context)
+    return render(request,'dashboard/category.html',context=context)
 
 
 
-def search(request: Request):
+def search_product(request: Request):
     if request.method == "POST":
         search_query = request.POST.get('inputval')
         featured = request.POST.get('featuredval')
@@ -90,12 +89,12 @@ def search(request: Request):
 def search_category(request: Request):
     if request.method == "POST":
         search_query = request.POST.get('inputval')
-        featured = request.POST.get('featuredval')
+        display = request.POST.get('displayval')
         # print(search_query)
-        # print(featured)
-        products = get_searched_product_context(search_query,featured)
+        # print(display)
+        category = get_searched_category_context(search_query,display)
         response_data={
             'message':'success',
-            'input_value': serialize('json',products)
+            'input_value': serialize('json',category)
         }
         return JsonResponse(response_data,safe=False)

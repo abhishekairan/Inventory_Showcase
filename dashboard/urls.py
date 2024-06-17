@@ -22,5 +22,7 @@ urlpatterns = [
     path('login/',login,name="login"),
     path('dashboard/',dashboard, name="dashboard"),
     path('dashboard/product',product,name='dashboard-product'),
-    path('search/',search,name='search')
+    path('dashboard/category',category,name='dashboard-category'),
+    path('search/product/',search_product,name='search-product'),
+    path('search/category/',search_category,name='search-category')
 ]
