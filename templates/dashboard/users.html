@@ -10,29 +10,29 @@
 {% block dashboard-containt %}
 
 <div class="overview-cards">
-    <a href="{% url "dashboard-tags" %}">
+    <a href="{% url "dashboard-users" %}">
         <div class="card">
             <div class="card-icon">
                 <span class="icon"><img width="100" height="100" src="https://img.icons8.com/pastel-glyph/100/FD7E14/cardboard-box.png" alt="Products"/></span> 
             </div>
             <div class="card-title">
-                <h2>Total Tags</h2>
+                <h2>Total Users</h2>
             </div>
             <div class="card-info">
-                <h3>{{tags_count}}</h3>
+                <h3>{{users_count}}</h3>
             </div>
         </div></a>
         
-    <a href="{% url "dashboard-tags" %}">
+    <a href="{% url "dashboard-users" %}">
         <div class="card">
             <div class="card-icon">
                 <span class="icon"><img width="100" height="100" src="https://img.icons8.com/pastel-glyph/100/FD7E14/cardboard-box.png" alt="Products"/></span> 
             </div>
             <div class="card-title">
-                <h2>Display Tags</h2>
+                <h2>Super Users</h2>
             </div>
             <div class="card-info">
-                <h3>{{display_tags}}</h3>
+                <h3>{{super_users}}</h3>
             </div>
         </div></a>
 </div>
@@ -41,7 +41,7 @@
 <div class="overview-lists">
     <div class="list-title">
         <div class="title">
-            <h3>Tag List</h3>
+            <h3>User List</h3>
         </div>
         <div class="filters">
 
@@ -52,7 +52,7 @@
             </select> {% endcomment %}
             
             <select name="featured" id="featured">
-                <option value="None" disabled selected>Display Tags</option>
+                <option value="None" disabled selected>Super User</option>
                 <option value="True">True</option>
                 <option value="False">False</option>
             </select>
@@ -69,22 +69,22 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>username</th>
                 <th>Display Name</th>
-                <th>Description</th>
-                <th>Category</th>
+                <th>Email</th>
+                <th>Date Joined</th>
                 <th>Display</th>
             </tr>
         </thead>
         <tbody id="product-list">
-            {% for tag in tags %}
+            {% for user in users %}
             <tr data-url="{% url "dashboard" %}" class="product-tr">
-                <td>{{tag.category_id}}</td>
-                <td>{{tag.name}}</td>
-                <td>{{tag.display_name}}</td>
-                <td>{{tag.description}}</td>
-                <td>{{tag.main_category}}</td>
-                {% if tag.display %}
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.firstname}} {{user.last_name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.date_joined}}</td>
+                {% if user.is_superuser %}
                 <td><img width="24" height="24" src="https://img.icons8.com/color/48/checked--v1.png" alt="checked--v1"/></td>
                 {% else %}
                 <td><img width="24" height="24" src="https://img.icons8.com/color/48/cancel--v1.png" alt="cancel--v1"/></td>
@@ -98,5 +98,5 @@
 {% endblock dashboard-containt %}
 
 {% block script %}
-<script src="{% static "js/dashboard/tags.js" %}"></script>
+<script src="{% static "js/dashboard/users.js" %}"></script>
 {% endblock script %}

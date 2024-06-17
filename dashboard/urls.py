@@ -24,7 +24,9 @@ urlpatterns = [
     path('dashboard/product',product,name='dashboard-product'),
     path('dashboard/category',category,name='dashboard-category'),
     path('dashboard/tags',tags,name='dashboard-tags'),
+    path('dashboard/user',users,name='dashboard-users'),
     path('search/product/',search_product,name='search-product'),
     path('search/category/',search_category,name='search-category'),
     path('search/tags/',search_tags,name='search-tags'),
+    path('search/users/',search_users,name='search-users'),
 ]

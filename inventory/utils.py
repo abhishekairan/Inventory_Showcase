@@ -92,9 +92,14 @@ def get_tags():
     tags = ProductCategory.objects.all()
     return tags
 
-def get_user():
+def get_users():
     users = User.objects.all()
     return users
+
+def get_product_categories():
+    tags = ProductCategory.objects.all()
+    return tags
+
 
 def get_searched_category_context(search_query,display=None):
     categories = Category.objects.all()
@@ -105,11 +110,6 @@ def get_searched_category_context(search_query,display=None):
         # print('Products got filtered by featured')
     return categories
 
-
-def get_product_categories():
-    tags = ProductCategory.objects.all()
-    return tags
-
 def get_searched_tags_context(search_query,display=None):
     tags = ProductCategory.objects.all()
     print(display)
@@ -119,3 +119,13 @@ def get_searched_tags_context(search_query,display=None):
         tags = tags.filter(display=display)
         print('Products got filtered by featured')
     return tags
+
+def get_searched_users_context(search_query,display=None):
+    users = User.objects.all()
+    print(display)
+    if search_query!=None:
+        users = users.filter(Q(first_name__icontains=search_query) | Q(last_name__icontains = search_query) | Q(username__icontains = search_query) | Q(email__icontains = search_query))
+    if display in ['True','False']:
+        users = users.filter(is_superuser=display)
+        print('Products got filtered by featured')
+    return users

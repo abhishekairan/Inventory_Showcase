@@ -42,7 +42,7 @@ def dashboard(request):
     product_count = get_all_product_context().count()
     category_count = get_categories().count()
     tags_count = get_tags().count()
-    user_count = get_user().count()
+    user_count = get_users().count()
     context = {
         'product_count': product_count,
         'category_count': category_count,
@@ -89,6 +89,18 @@ def tags(request: Request):
 
 
 
+@login_required(login_url='login')
+def users(request: Request):
+    users = get_users()
+    context = {
+        'users_count': len(users),
+        'super_users': len(users.filter(is_superuser= True)),
+        'users': users,
+    }
+    return render(request,'dashboard/users.html',context=context)
+
+
+
 def search_product(request: Request):
     if request.method == "POST":
         search_query = request.POST.get('inputval')
@@ -127,5 +139,19 @@ def search_tags(request: Request):
         response_data={
             'message':'success',
             'input_value': serialize('json',category)
+        }
+        return JsonResponse(response_data,safe=False)
+    
+    
+def search_users(request: Request):
+    if request.method == "POST":
+        search_query = request.POST.get('inputval')
+        display = request.POST.get('featuredval')
+        # print(search_query)
+        # print(display)
+        users = get_searched_users_context(search_query,display)
+        response_data={
+            'message':'success',
+            'input_value': serialize('json',users)
         }
         return JsonResponse(response_data,safe=False)
