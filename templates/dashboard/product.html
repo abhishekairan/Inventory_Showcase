@@ -71,6 +71,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Category</th>
                 <th>Cost</th>
                 <th>Discount</th>
                 <th>Featured</th>
@@ -79,10 +80,11 @@
         </thead>
         <tbody id="product-list">
             {% for product in products %}
-            <tr data-url="{% url "dashboard" %}">
+            <tr data-url="{% url "dashboard" %}" class="product-tr">
                 <td>{{product.product_id}}</td>
                 <td>{{product.name}}</td>
                 <td>{{product.description}}</td>
+                <td>{{product.category.main_category}}/{{product.category}}</td>
                 <td>{{product.cost}}</td>
                 <td>{{product.discount}}</td>
                 {% if product.featured %}
@@ -100,7 +102,6 @@
 {% endblock dashboard-containt %}
 
 {% block script %}
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="{% static "js/dashboard/product.js" %}"></script>
 <script>console.log('{% url "search" %}')</script>
 {% endblock script %}

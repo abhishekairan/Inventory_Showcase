@@ -14,6 +14,8 @@
     background: #060606;
     width: 15vw;
     height: 100vh;
+    position: sticky;
+    top: 0;
 }
 
 .sidepanel .logo {

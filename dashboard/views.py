@@ -60,6 +60,18 @@ def product(request: Request):
     return render(request,'dashboard/product.html',context=context)
 
 
+@login_required(login_url='login')
+def category(request: Request):
+    categories = get_all_product_context()
+    discounts = get_discount()
+    context = {
+        'product_count': len(categories),
+        'products': product,
+        'discounts': discounts
+    }
+    return render(request,'dashboard/product.html',context=context)
+
+
 
 def search(request: Request):
     if request.method == "POST":
@@ -67,6 +79,20 @@ def search(request: Request):
         featured = request.POST.get('featuredval')
         print(search_query)
         print(featured)
+        products = get_searched_product_context(search_query,featured)
+        response_data={
+            'message':'success',
+            'input_value': serialize('json',products)
+        }
+        return JsonResponse(response_data,safe=False)
+    
+    
+def search_category(request: Request):
+    if request.method == "POST":
+        search_query = request.POST.get('inputval')
+        featured = request.POST.get('featuredval')
+        # print(search_query)
+        # print(featured)
         products = get_searched_product_context(search_query,featured)
         response_data={
             'message':'success',

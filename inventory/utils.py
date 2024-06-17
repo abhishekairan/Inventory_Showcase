@@ -41,7 +41,7 @@ def get_featured_product_section_context(limit: int = 0):
 
 
 def get_all_product_context(limit:int = 0,category: Union[ProductCategory,Category,None]=None):
-    print(category)
+    # print(category)
     if category != None:
         if type(category) == ProductCategory:
             allproducts = Product.objects.filter(category=category)
@@ -60,7 +60,7 @@ def get_product_context(id:int):
     context = {}
     product = Product.objects.filter(product_id = id)[0]
     context[product] = get_product_images(product)
-    print(context)
+    # print(context)
     return context
 
 
@@ -75,8 +75,9 @@ def get_searched_product_context(search_query,featured=None):
     product_context = Product.objects.all()
     if search_query!=None:
         product_context = product_context.filter(Q(name__icontains=search_query) | Q(description__icontains = search_query))
-    if featured!=None:
+    if featured in ['True','False']:
         product_context = product_context.filter(featured=featured)
+        # print('Products got filtered by featured')
     return product_context
 
 def get_discount():
