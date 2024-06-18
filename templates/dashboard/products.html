@@ -3,7 +3,7 @@
 
 {% block link %}
 {% load static %}
-<link rel="stylesheet" href="{% static "css/dashboard/product.css" %}">
+<link rel="stylesheet" href="{% static "css/dashboard/products.css" %}">
 {% endblock link %}
 
 
@@ -80,7 +80,7 @@
         </thead>
         <tbody id="product-list">
             {% for product in products %}
-            <tr data-url="{% url "dashboard" %}" class="product-tr">
+            <tr data-url="{% url "Dproduct" product.product_id %}" class="product-tr">
                 <td>{{product.product_id}}</td>
                 <td>{{product.name}}</td>
                 <td>{{product.description}}</td>
@@ -102,5 +102,5 @@
 {% endblock dashboard-containt %}
 
 {% block script %}
-<script src="{% static "js/dashboard/product.js" %}"></script>
+<script src="{% static "js/dashboard/products.js" %}"></script>
 {% endblock script %}

@@ -21,8 +21,9 @@ from .views import *
 urlpatterns = [
     path('login/',login,name="login"),
     path('dashboard/',dashboard, name="dashboard"),
-    path('dashboard/product',product,name='dashboard-product'),
-    path('dashboard/category',category,name='dashboard-category'),
+    path('dashboard/product',products,name='dashboard-product'),
+    path('dashboard/product/<str:id>',product,name='Dproduct'),
+    path('dashboard/category',categories,name='dashboard-category'),
     path('dashboard/tags',tags,name='dashboard-tags'),
     path('dashboard/user',users,name='dashboard-users'),
     path('search/product/',search_product,name='search-product'),

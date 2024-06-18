@@ -53,7 +53,7 @@ def dashboard(request):
 
 
 @login_required(login_url='login')
-def product(request: Request):
+def products(request: Request):
     product = get_all_product_context()
     featured_product = product.filter(featured=True)
     discounts = get_discount()
@@ -63,11 +63,24 @@ def product(request: Request):
         'products': product,
         'discounts': discounts
     }
-    return render(request,'dashboard/product.html',context=context)
+    return render(request,'dashboard/products.html',context=context)
+
+@login_required(login_url='login')
+def product(request: Request,id):
+    product = get_all_product_context()
+    featured_product = product.filter(featured=True)
+    discounts = get_discount()
+    context = {
+        'product_count': len(product),
+        'featured_product_count': len(featured_product),
+        # 'products': product,
+        'discounts': discounts
+    }
+    return render(request,'dashboard/dashboard.html',context=context)
 
 
 @login_required(login_url='login')
-def category(request: Request):
+def categories(request: Request):
     categories = get_categories()
     context = {
         'category_count': len(categories),

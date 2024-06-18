@@ -45,7 +45,7 @@ function renderpoducts(response){
 function ajaxCall(){
     var inputVal = $('#search_field').val()
     var featured_value = $('#featured').val();
-    console.log(featured_value)
+    // console.log(featured_value)
     $.ajax({
         url: '/search/tags/',
         method: 'POST',

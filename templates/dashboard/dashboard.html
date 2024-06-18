@@ -23,77 +23,7 @@
         </div>
     </header>
 
-    <div class="dashboard-container">
-        <div class="sidepanel">
-            <span class="logo" id="desktop-logo">
-                <a href="{% url "home" %}" class="logo">
-                    <img src="/static/Media/resource/logo-white.png" alt="Glowing">
-                </a>
-            </span>
-            <div class="main-content">
-                {% comment %} Home model {% endcomment %}
-                <ul class="models-list">
-                    <li class="model">
-                        <a class="model-info" data-accordion-btn href="{% url "dashboard" %}">
-                            <div class="sideline"></div>
-                            <p class="model-title">Home</p>
-                            <div class="model-icon">
-                                <ion-icon name="chevron-down-outline" class="add-icon"></ion-icon>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                {% comment %} Product model {% endcomment %}
-                <ul class="models-list">
-                    <li class="model">
-                        <a class="model-info" data-accordion-btn href="{% url "dashboard-product" %}">
-                            <div class="sideline"></div>
-                            <p class="model-title">Products</p>
-                            <div class="model-icon">
-                                <ion-icon name="chevron-down-outline" class="add-icon"></ion-icon>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                {% comment %} Categoires Model {% endcomment %}
-                <ul class="models-list"> 
-                    <li class="model">
-                        <a class="model-info" data-accordion-btn href="{% url "dashboard-category" %}">
-                            <div class="sideline"></div>
-                            <p class="model-title">Categories</p>
-                            <div class="model-icon">
-                                <ion-icon name="chevron-down-outline" class="add-icon"></ion-icon>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                {% comment %} Tag model {% endcomment %}
-                <ul class="models-list">
-                    <li class="model">
-                        <a class="model-info" data-accordion-btn href="{% url "dashboard-tags" %}">
-                            <div class="sideline"></div>
-                            <p class="model-title">Tags</p>
-                            <div class="model-icon">
-                                <ion-icon name="chevron-down-outline" class="add-icon"></ion-icon>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                {% comment %} User model {% endcomment %}
-                <ul class="models-list">
-                    <li class="model">
-                        <a class="model-info" data-accordion-btn href="{% url "dashboard-users" %}">
-                            <div class="sideline"></div>
-                            <p class="model-title">Users</p>
-                            <div class="model-icon">
-                                <ion-icon name="chevron-down-outline" class="add-icon"></ion-icon>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
+    {% include "dashboard/menu.html" %}
         
     <main>
         {% block dashboard-containt %}
