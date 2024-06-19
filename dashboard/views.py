@@ -67,17 +67,24 @@ def products(request: Request):
 
 @login_required(login_url='login')
 def product(request: Request,id):
-    product = get_all_product_context()
-    featured_product = product.filter(featured=True)
+    if request.method == "POST":
+        print(request.POST)
+    product = get_product_context(id)
     discounts = get_discount()
+    tags = get_tags()
     context = {
-        'product_count': len(product),
-        'featured_product_count': len(featured_product),
-        # 'products': product,
-        'discounts': discounts
+        'products': product,
+        'discounts': discounts,
+        'tags': tags
     }
-    return render(request,'dashboard/dashboard.html',context=context)
+    print(product)
+    return render(request,'dashboard/product.html',context=context)
 
+@login_required(login_url='login')
+def addProduct(request: Request):
+    if request.method == "POST":
+        print(request.POST)
+    return redirect('dashboard-product')
 
 @login_required(login_url='login')
 def categories(request: Request):

@@ -14,9 +14,17 @@
     width: 100%;
 }
 .list-title .title{
+    display: flex;
+    gap: 20px;
     grid-area: title;
     font-size: 24px;
     color: black;
+}
+.list-title .title button{
+    font-size: 16px;
+    border: 1px solid black;
+    padding: 0px 10px;
+    border-radius: 12px;
 }
 .list-title .filters{
     grid-area: filters;

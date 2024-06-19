@@ -76,7 +76,13 @@ class Product(models.Model):
                 default_image = ProductImage.objects.filter(product = self)
         return default_image
                 
-
+    @property
+    def thumbnail_image(self):
+        thumbnail_image = ProductImage.objects.filter(product = self, is_default = True)
+        if thumbnail_image.exists():
+            return thumbnail_image[0]
+        else:
+            return None
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)

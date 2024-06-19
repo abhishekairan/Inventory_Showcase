@@ -23,6 +23,7 @@ urlpatterns = [
     path('dashboard/',dashboard, name="dashboard"),
     path('dashboard/product',products,name='dashboard-product'),
     path('dashboard/product/<str:id>',product,name='Dproduct'),
+    path('dashboard/add-product',addProduct,name='add-product'),
     path('dashboard/category',categories,name='dashboard-category'),
     path('dashboard/tags',tags,name='dashboard-tags'),
     path('dashboard/user',users,name='dashboard-users'),
