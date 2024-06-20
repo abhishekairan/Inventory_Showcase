@@ -28,7 +28,7 @@ fileInput.addEventListener('change', (event) => {
                     <input type="radio" name="default_image" id="default_image" value="-1" checked>
                 </div>
                     <div class="image-action-buttons">
-                        <input class="dlt-btn" type="button" onclick='deleteImage(-1)' name="image-0" value="${imgUrl}">
+                        <input class="dlt-btn" type="button" onclick='deleteImage(-1)' name="0" value="${imgUrl}">
                     </input>
                     <img width="100" height="100" src="https://img.icons8.com/plasticine/100/filled-trash.png" alt="filled-trash"/>
                     </div>
@@ -50,10 +50,10 @@ addimage.addEventListener('change', (event) => {
                     <img src="${imgUrl}" alt="">
                 </div>
                 <div class="image-action-buttons default-image">
-                    <input type="radio" name="default_image" id="default_image" value="${imgUrl}}">
+                    <input type="radio" name="default_image" id="default_image" value="${imgUrl}">
                 </div>
                     <div class="image-action-buttons">
-                        <input class="dlt-btn" type="text" onclick='deleteImage(${id})' name="image-${id}" value="${imgUrl}">
+                        <input class="dlt-btn" type="text" onclick='deleteImage(${id})' name="${id}" value="${imgUrl}">
                     </input>
                     <img width="100" height="100" src="https://img.icons8.com/plasticine/100/filled-trash.png" alt="filled-trash"/>
                     </div>
@@ -68,3 +68,4 @@ function deleteImage(id){
     console.log(image)
     image.remove()
 }
+

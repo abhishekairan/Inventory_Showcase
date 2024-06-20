@@ -2,6 +2,9 @@ from .models import Category, ProductCategory, Product, ProductImage, Discount
 from typing import Union
 from django.db.models import Q
 from django.contrib.auth.models import User
+import requests
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 def get_header_template_content():
     
@@ -20,6 +23,9 @@ def get_product_images(product: Product):
     images = ProductImage.objects.all().filter(product= product).order_by('-is_default')
     return images
 
+def get_image(id:int):
+    image = ProductImage.objects.get(id=id)
+    return image
 
 def get_newArrival_product_section_context(limit:int=0):
     if limit == 0:
@@ -80,16 +86,36 @@ def get_searched_product_context(search_query,featured=None):
         # print('Products got filtered by featured')
     return product_context
 
-def get_discount():
-    discount = Discount.objects.all()
+def get_products(id:int=None):
+    if id != None:
+        products = Product.objects.filter(product_id = id)
+    else:
+        products = Product.objects.all()
+    return products
+
+def get_discount(value:str=None):
+    if value != None:
+        newvalue = value.replace('%'," %").replace('₹',"₹ ").split()
+        if(newvalue[0]=='₹'):
+            discounttype = newvalue[0]
+            discountamount = int(newvalue[1])
+        else:
+            discounttype = newvalue[1]
+            discountamount = int(newvalue[0])
+        discount = Discount.objects.get(value= discountamount, discountType=discounttype)
+    else:
+        discount = Discount.objects.all()
     return discount
 
 def get_categories():
     categories = Category.objects.all()
     return categories
 
-def get_tags():
-    tags = ProductCategory.objects.all()
+def get_tags(id:int=None):
+    if id != None:
+        tags = ProductCategory.objects.get(category_id=id)
+    else:
+        tags = ProductCategory.objects.all()
     return tags
 
 def get_users():
@@ -112,20 +138,75 @@ def get_searched_category_context(search_query,display=None):
 
 def get_searched_tags_context(search_query,display=None):
     tags = ProductCategory.objects.all()
-    print(display)
+    # print(display)
     if search_query!=None:
         tags = tags.filter(Q(name__icontains=search_query) | Q(description__icontains = search_query))
     if display in ['True','False']:
         tags = tags.filter(display=display)
-        print('Products got filtered by featured')
+        # print('Products got filtered by featured')
     return tags
 
 def get_searched_users_context(search_query,display=None):
     users = User.objects.all()
-    print(display)
+    # print(display)
     if search_query!=None:
         users = users.filter(Q(first_name__icontains=search_query) | Q(last_name__icontains = search_query) | Q(username__icontains = search_query) | Q(email__icontains = search_query))
     if display in ['True','False']:
         users = users.filter(is_superuser=display)
-        print('Products got filtered by featured')
+        # print('Products got filtered by featured')
     return users
+
+def save_image(image_url):
+    response = requests.get(image_url)
+    print(response)
+    if response.status_code == 200:
+        print("If condition fullfilled")
+        file_name = image_url.split("/")[-1]
+        print(f"file_name: {file_name}")
+        file_content = ContentFile(response.content)
+        print(f"file_content: {file_content}")
+        file_path = default_storage.save(f'images/{file_name}', file_content)
+
+def add_or_update_product(queryset):
+    images = {}
+    kwargs = {}
+    product_id = None
+    for key, value in queryset:
+        # print(f"{key}: {value}")
+        if key == 'csrfmiddlewaretoken':
+            pass
+        elif key == 'product-id':
+            product_id = value
+        elif key=='product_name_input':
+            kwargs['name'] = value
+        elif key == 'product_cost_input':
+            kwargs['cost'] = value
+        elif key == 'product_discount_input':
+            kwargs['discount'] = get_discount(value)
+        elif key == 'product_tag_input':
+            kwargs['category'] = get_tags(value)
+        elif key == 'featured':
+            kwargs['featured'] = value
+        elif key == 'product_description_input':
+            kwargs['description'] = value
+        elif key == 'product_additional_details_input':
+            kwargs['additional_details'] = value
+        else:
+            images[key] = value
+            
+    # print(images)
+    for key, value in images.items():
+        if key=='default_image':
+            if str.isnumeric(value):
+                image = get_image(value)
+                image.is_default = True
+                image.save()
+            else:
+                # print(value)
+                save_image(value)
+                
+    if product_id != None:
+        product = get_products(product_id)
+        product.update(**kwargs)
+    else:
+        product = Product.objects.create(**kwargs)

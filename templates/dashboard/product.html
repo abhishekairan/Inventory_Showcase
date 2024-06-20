@@ -10,6 +10,7 @@
     {% csrf_token %}
     <div class="container">
         {% for product,images in products.items %}
+        <input type="text" name="product-id" value="{{product.product_id}}" class="dlt-btn">
         {% comment %} {{products}} {% endcomment %}
         <div class="product-thumbnail-container">
         <div class="product-thumbnail">
@@ -46,7 +47,11 @@
                 <select name="product_discount_input" id="product_discount_input" class="input">
                     <option value="{{product.discount}}" disabled selected>{{product.discount}}</option>
                     {% for Discount in discounts %}
+                    {% if Discount == product.discount %}
+                    <option value="{{Discount}}" selected>{{Discount}}</option>
+                    {% else %}
                     <option value="{{Discount}}">{{Discount}}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
             </div>
@@ -55,7 +60,11 @@
                 <select name="product_tag_input" id="product_tag_input" class="input">
                     <option value="{{product.category.category_id}}" disabled selected>{{product.category}}</option>
                     {% for tag in tags %}
+                    {% if tag.category_id == product.category.category_id %}
+                    <option value="{{tag.category_id}}" selected>{{tag}}</option>
+                    {% else %}
                     <option value="{{tag.category_id}}">{{tag}}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
             </div>
@@ -63,9 +72,9 @@
                 <h3>Featured</h3>
                 <label class="toggle-switch">
                     {% if product.featured == True %}
-                    <input type="checkbox" checked>
+                    <input type="checkbox" name="featured" value="True" checked>
                     {% else %}
-                    <input type="checkbox">
+                    <input type="checkbox" name="featured" value="False">
                     {% endif %}
                     <div class="toggle-switch-background">
                     <div class="toggle-switch-handle"></div>
@@ -88,7 +97,7 @@
                 <h3>Images:</h3>
                 <div class="upload-btn-wrapper">
                     <button class="btn">Add Image</button>
-                    <input type="file" name="myfile" id="addimage"/>
+                    <input type="file" id="addimage"/>
                 </div>
             </div>
             <div class="image-gallary" id="image-gallary">
@@ -105,7 +114,7 @@
                         {% endif %}
                     </div>
                     <div class="image-action-buttons">
-                        <input class="dlt-btn" type="text" onclick='deleteImage({{image.id}})' name="image-{{image.id}}" value="{{image.image.url}}">
+                        <input class="dlt-btn" type="text" onclick='deleteImage({{image.id}})' name="{{image.id}}" value="{{image.image.url}}">
                     </input>
                     <img width="100" height="100" src="https://img.icons8.com/plasticine/100/filled-trash.png" alt="filled-trash"/>
                     </div>

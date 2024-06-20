@@ -67,8 +67,6 @@ def products(request: Request):
 
 @login_required(login_url='login')
 def product(request: Request,id):
-    if request.method == "POST":
-        print(request.POST)
     product = get_product_context(id)
     discounts = get_discount()
     tags = get_tags()
@@ -77,13 +75,14 @@ def product(request: Request,id):
         'discounts': discounts,
         'tags': tags
     }
-    print(product)
+    # print(product)
     return render(request,'dashboard/product.html',context=context)
 
 @login_required(login_url='login')
 def addProduct(request: Request):
+    # print(request.FILES)
     if request.method == "POST":
-        print(request.POST)
+        add_or_update_product(request.POST.items())
     return redirect('dashboard-product')
 
 @login_required(login_url='login')
@@ -125,8 +124,8 @@ def search_product(request: Request):
     if request.method == "POST":
         search_query = request.POST.get('inputval')
         featured = request.POST.get('featuredval')
-        print(search_query)
-        print(featured)
+        # print(search_query)
+        # print(featured)
         products = get_searched_product_context(search_query,featured)
         response_data={
             'message':'success',
