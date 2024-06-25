@@ -114,9 +114,8 @@
                         {% endif %}
                     </div>
                     <div class="image-action-buttons">
-                        <input class="dlt-btn" type="text" onclick='deleteImage({{image.id}})' name="{{image.id}}" value="{{image.image.url}}">
-                    </input>
-                    <img width="100" height="100" src="https://img.icons8.com/plasticine/100/filled-trash.png" alt="filled-trash"/>
+                        <input class="dlt-btn" type="text" name="{{image.id}}" value="{{image.image.url}}">
+                        <img width="100" height="100" src="https://img.icons8.com/plasticine/100/filled-trash.png" alt="filled-trash" onclick='deleteImage({{image.id}})'/>
                     </div>
                 </div>
                 {% endfor %}

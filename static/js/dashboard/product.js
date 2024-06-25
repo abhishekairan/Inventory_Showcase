@@ -54,9 +54,8 @@ function add_image_to_imageGallary(id,url,defaultImage=false){
                     ${default_image_content}
               </div>
               <div class="image-action-buttons">
-                  <input class="dlt-btn" type="text" onclick='deleteImage(${id})' name="${id}" value="${url}">
-              </input>
-              <img width="100" height="100" src="https://img.icons8.com/plasticine/100/filled-trash.png" alt="filled-trash"/>
+                    <input class="dlt-btn" type="text" name="${id}" value="${url}">
+                    <img width="100" height="100" src="https://img.icons8.com/plasticine/100/filled-trash.png" alt="filled-trash" onclick='deleteImage(${id})'/>
               </div>
           </div>`
       image_gallary.innerHTML += image;

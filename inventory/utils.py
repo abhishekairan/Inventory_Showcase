@@ -24,8 +24,11 @@ def get_product_images(product: Product):
     return images
 
 def get_image(id:int):
-    image = ProductImage.objects.get(id=id)
-    return image
+    image = ProductImage.objects.filter(id=id)
+    if image.exists():
+        return image[0]
+    else:
+        return None
 
 def get_newArrival_product_section_context(limit:int=0):
     if limit == 0:
@@ -156,24 +159,12 @@ def get_searched_users_context(search_query,display=None):
         # print('Products got filtered by featured')
     return users
 
-def save_image(image_url,product):
-    
-        product_image = ProductImage.objects.create(product = product, image = image_url)
-        print("Image added successffully")
-#     response = requests.get(image_url, stream=True)
-#     if response.status_code == 200:
-#         image_data = BytesIO(response.content)
-#         image_file = InMemoryUploadedFile(image_data, None, 'image.jpg', 'image/jpeg', image_data.tell(), None)
-#         # Now you can save the image to a Django model
-#         product_image = ProductImage.objects.create(product = product, image = image_file)
-#         print("Image Saved successfully")
-
 def add_or_update_product(queryset):
     images = {}
     kwargs = {}
     product_id = None
     for key, value in queryset:
-        print(f"{key}: {value}")
+        # print(f"{key}: {value}")
         if key == 'csrfmiddlewaretoken':
             pass
         elif key == 'product-id':
@@ -201,18 +192,24 @@ def add_or_update_product(queryset):
     else:
         product = Product.objects.create(**kwargs)
         
-    # print(images)
+    exsistingImages = list(get_product_images(product[0]))
+    exsistingImage = [image.id for image in exsistingImages ]
     for key, value in images.items():
         if key=='default_image':
-            if str.isnumeric(value):
-                image = get_image(value)
+            image = get_image(value)
+            if(image):
                 image.is_default = True
                 image.save()
-            else:
-                print(f"value: {value}")
-                print(f"product: {product[0]}")
-                save_image(value,product[0])
-                
+        else:
+            image = get_image(key)
+            image.product = product[0]
+            image.save()
+            exsistingImage.remove(image.id)
+    for imageID in exsistingImage:
+        image = get_image(imageID)
+        image.delete()
+
+
 
 def clearCache():
     productImages = ProductImage.objects.all().filter(product=None)

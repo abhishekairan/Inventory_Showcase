@@ -81,7 +81,6 @@ def product(request: Request,id):
 
 @login_required(login_url='login')
 def addProduct(request: Request):
-    print(request.FILES)
     if request.method == "POST":
         add_or_update_product(request.POST.items())
     return redirect('dashboard-product')
