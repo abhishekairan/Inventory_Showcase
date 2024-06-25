@@ -31,4 +31,5 @@ urlpatterns = [
     path('search/category/',search_category,name='search-category'),
     path('search/tags/',search_tags,name='search-tags'),
     path('search/users/',search_users,name='search-users'),
+    path('add-product-image/', add_product_image, name='add-product-image'),
 ]

@@ -3,8 +3,8 @@ from typing import Union
 from django.db.models import Q
 from django.contrib.auth.models import User
 import requests
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 def get_header_template_content():
     
@@ -156,23 +156,24 @@ def get_searched_users_context(search_query,display=None):
         # print('Products got filtered by featured')
     return users
 
-def save_image(image_url):
-    response = requests.get(image_url)
-    print(response)
-    if response.status_code == 200:
-        print("If condition fullfilled")
-        file_name = image_url.split("/")[-1]
-        print(f"file_name: {file_name}")
-        file_content = ContentFile(response.content)
-        print(f"file_content: {file_content}")
-        file_path = default_storage.save(f'images/{file_name}', file_content)
+def save_image(image_url,product):
+    
+        product_image = ProductImage.objects.create(product = product, image = image_url)
+        print("Image added successffully")
+#     response = requests.get(image_url, stream=True)
+#     if response.status_code == 200:
+#         image_data = BytesIO(response.content)
+#         image_file = InMemoryUploadedFile(image_data, None, 'image.jpg', 'image/jpeg', image_data.tell(), None)
+#         # Now you can save the image to a Django model
+#         product_image = ProductImage.objects.create(product = product, image = image_file)
+#         print("Image Saved successfully")
 
 def add_or_update_product(queryset):
     images = {}
     kwargs = {}
     product_id = None
     for key, value in queryset:
-        # print(f"{key}: {value}")
+        print(f"{key}: {value}")
         if key == 'csrfmiddlewaretoken':
             pass
         elif key == 'product-id':
@@ -194,6 +195,12 @@ def add_or_update_product(queryset):
         else:
             images[key] = value
             
+    if product_id != None:
+        product = get_products(product_id)
+        product.update(**kwargs)
+    else:
+        product = Product.objects.create(**kwargs)
+        
     # print(images)
     for key, value in images.items():
         if key=='default_image':
@@ -202,11 +209,12 @@ def add_or_update_product(queryset):
                 image.is_default = True
                 image.save()
             else:
-                # print(value)
-                save_image(value)
+                print(f"value: {value}")
+                print(f"product: {product[0]}")
+                save_image(value,product[0])
                 
-    if product_id != None:
-        product = get_products(product_id)
-        product.update(**kwargs)
-    else:
-        product = Product.objects.create(**kwargs)
+
+def clearCache():
+    productImages = ProductImage.objects.all().filter(product=None)
+    for image in productImages:
+        image.delete()

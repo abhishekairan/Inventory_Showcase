@@ -49,6 +49,7 @@ def dashboard(request):
         'tags_count': tags_count,
         'user_count': user_count,
     }
+    clearCache()
     return render(request, 'dashboard/dashboard.html',context=context)
 
 
@@ -80,7 +81,7 @@ def product(request: Request,id):
 
 @login_required(login_url='login')
 def addProduct(request: Request):
-    # print(request.FILES)
+    print(request.FILES)
     if request.method == "POST":
         add_or_update_product(request.POST.items())
     return redirect('dashboard-product')
@@ -174,3 +175,17 @@ def search_users(request: Request):
             'input_value': serialize('json',users)
         }
         return JsonResponse(response_data,safe=False)
+    
+    
+    
+def add_product_image(request: Request):
+    if request.method == 'POST' and request.FILES.get('image'):
+        image = request.FILES['image']
+        product_image = ProductImage.objects.create(image=image)
+        context = {
+            'success': True,
+            'image_id': product_image.id,
+            'image_url': product_image.image.url
+        }
+        return JsonResponse(context)
+    return JsonResponse({'success': False})

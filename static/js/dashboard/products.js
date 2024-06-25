@@ -44,6 +44,7 @@ function renderpoducts(response){
     }
 }
 
+// Ajax Call function to search
 function ajaxCall(){
     var inputVal = $('#search_field').val()
     var featured_value = $('#featured').val();

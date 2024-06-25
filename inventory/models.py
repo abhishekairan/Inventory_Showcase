@@ -85,7 +85,7 @@ class Product(models.Model):
             return None
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE,blank=True,null=True)
     image = models.ImageField(upload_to='product_images/')
     alt_text = models.CharField(max_length=100, blank=True, null=True)
 
@@ -97,4 +97,4 @@ class ProductImage(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Image for {self.product.name}"
+        return f"Image for {self.id}"
