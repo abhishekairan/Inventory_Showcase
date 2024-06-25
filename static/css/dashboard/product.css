@@ -268,5 +268,8 @@ textarea{
     border-radius: 20px;
 }
 .discard .function-button{
+    background: rgb(239, 168, 68);
+}
+.delete .function-button{
     background: rgb(255, 55, 55);
 }

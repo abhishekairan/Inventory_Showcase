@@ -189,10 +189,11 @@ def add_or_update_product(queryset):
     if product_id != None:
         product = get_products(product_id)
         product.update(**kwargs)
+        product=product[0]
     else:
         product = Product.objects.create(**kwargs)
         
-    exsistingImages = list(get_product_images(product[0]))
+    exsistingImages = list(get_product_images(product))
     exsistingImage = [image.id for image in exsistingImages ]
     for key, value in images.items():
         if key=='default_image':
@@ -202,9 +203,12 @@ def add_or_update_product(queryset):
                 image.save()
         else:
             image = get_image(key)
-            image.product = product[0]
+            image.product = product
             image.save()
-            exsistingImage.remove(image.id)
+            try:
+                exsistingImage.remove(image.id)
+            except:
+                pass
     for imageID in exsistingImage:
         image = get_image(imageID)
         image.delete()

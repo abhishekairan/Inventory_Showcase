@@ -80,6 +80,26 @@ def product(request: Request,id):
     return render(request,'dashboard/product.html',context=context)
 
 @login_required(login_url='login')
+def newProduct(request: Request):
+    discounts = get_discount()
+    tags = get_tags()
+    context = {
+        'discounts': discounts,
+        'tags': tags
+    }
+    # print(product)
+    return render(request,'dashboard/newproduct.html',context=context)
+
+
+@login_required(login_url='login')
+def deleteProduct(request: Request,id):
+    product = get_products(int(id))
+    product.delete()
+    # print(product)
+    return redirect('dashboard-product')
+
+
+@login_required(login_url='login')
 def addProduct(request: Request):
     if request.method == "POST":
         add_or_update_product(request.POST.items())

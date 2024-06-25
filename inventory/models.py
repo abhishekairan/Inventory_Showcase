@@ -1,3 +1,4 @@
+import os
 from django.db import models
 
 # Create your models here.
@@ -96,5 +97,14 @@ class ProductImage(models.Model):
             ProductImage.objects.filter(product=self.product, is_default=True).update(is_default=False)
         super().save(*args, **kwargs)
 
+
+    def delete(self, *args, **kwargs):
+        image_path = self.image.path
+        self.image.delete()
+        if os.path.exists(image_path):
+            os.remove(image_path)
+        super(ProductImage, self).delete(*args, **kwargs)
+        
+        
     def __str__(self):
         return f"Image for {self.id}"
