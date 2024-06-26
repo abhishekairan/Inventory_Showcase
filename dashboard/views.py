@@ -64,7 +64,7 @@ def products(request: Request):
         'products': product,
         'discounts': discounts
     }
-    return render(request,'dashboard/products.html',context=context)
+    return render(request,'dashboard/product/products.html',context=context)
 
 @login_required(login_url='login')
 def product(request: Request,id):
@@ -77,7 +77,7 @@ def product(request: Request,id):
         'tags': tags
     }
     # print(product)
-    return render(request,'dashboard/product.html',context=context)
+    return render(request,'dashboard/product/product.html',context=context)
 
 @login_required(login_url='login')
 def newProduct(request: Request):
@@ -88,7 +88,7 @@ def newProduct(request: Request):
         'tags': tags
     }
     # print(product)
-    return render(request,'dashboard/newproduct.html',context=context)
+    return render(request,'dashboard/product/newproduct.html',context=context)
 
 
 @login_required(login_url='login')
@@ -113,7 +113,7 @@ def categories(request: Request):
         'display_category': len(categories.filter(display= True)),
         'categories': categories,
     }
-    return render(request,'dashboard/categories.html',context=context)
+    return render(request,'dashboard/category/categories.html',context=context)
 
 
 @login_required(login_url='login')
@@ -122,11 +122,11 @@ def category(request: Request,id):
     context = {
         'categories': categories,
     }
-    return render(request,'dashboard/category.html',context=context)
+    return render(request,'dashboard/category/category.html',context=context)
 
 @login_required(login_url='login')
 def newCategory(request: Request):
-    return render(request,'dashboard/newcategory.html')
+    return render(request,'dashboard/category/newcategory.html')
 
 
 @login_required(login_url='login')
@@ -153,7 +153,7 @@ def tags(request: Request):
         'display_tags': len(tags.filter(display= True)),
         'tags': tags,
     }
-    return render(request,'dashboard/tags.html',context=context)
+    return render(request,'dashboard/tags/tags.html',context=context)
 
 
 
@@ -165,7 +165,7 @@ def users(request: Request):
         'super_users': len(users.filter(is_superuser= True)),
         'users': users,
     }
-    return render(request,'dashboard/users.html',context=context)
+    return render(request,'dashboard/user/users.html',context=context)
 
 
 
