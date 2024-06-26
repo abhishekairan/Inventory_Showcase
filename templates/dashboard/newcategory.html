@@ -10,29 +10,23 @@
 <form action="{% url "add-category" %}" method="POST">
     {% csrf_token %}
     <div class="container">
-        {% for category in categories %}
-        <input type="text" name="category-id" value="{{category.category_id}}" class="dlt-btn">
         <div class="category-info">
             <div class="product-name">
                 <h3>Name:</h3>
-                <input type="text" name="category_name_input" id="category_name_input" value={{category.name}} class="input" required>
+                <input type="text" name="category_name_input" id="category_name_input" placeholder="Name" class="input" required>
             </div>
             <div class="product-name">
                 <h3>Display Name:</h3>
-                <input type="text" name="category_displayName_input" id="category_displayName_input" value={{category.display_name}} class="input" required>
+                <input type="text" name="category_displayName_input" id="category_displayName_input" placeholder="Display Name" class="input" required>
             </div>
             <div class="product-description">
                 <h3>Description:</h3>
-                <textarea name="category_description_input" id="category_description_input" class="input">{{category.description}}</textarea>
+                <textarea name="category_description_input" id="category_description_input" class="input" placeholder="Description"></textarea>
             </div>
             <div class="product-featured">
                 <h3>Display</h3>
                 <label class="toggle-switch">
-                    {% if category.display == True %}
-                    <input type="checkbox" name="display" value="True" checked>
-                    {% else %}
-                    <input type="checkbox" name="display" value="False">
-                    {% endif %}
+                    <input type="checkbox" name="display">
                     <div class="toggle-switch-background">
                     <div class="toggle-switch-handle"></div>
                     </div>
@@ -40,9 +34,6 @@
             </div>
         </div>
         <div class="function-buttons-container">
-            <div class="delete">
-                <a href="{% url "DeleteCategory" category.category_id%}"><button type="button" class="function-button">Delete</button></a>
-            </div>
             <div class="discard">
                 <a href="{% url "dashboard-category" %}"><button type="button" class="function-button">Discard</button></a>
             </div>
@@ -50,9 +41,6 @@
                 <button type="submit" class="function-button">Save</button>
             </div>
         </div>
-
-        {% comment %} <script>console.log('{{product.thumbnail_image}}')</script> {% endcomment %}
-        {% endfor %}
     </form>
 </div>
 {% endblock %}

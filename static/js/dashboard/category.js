@@ -1,5 +1,8 @@
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", addRedirect());
+
+
+function addRedirect() {
     const rows = document.querySelectorAll(".project-table tbody tr");
     // console.log(rows)
     rows.forEach(row => {
@@ -12,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
-});
+}
 
 
 
@@ -28,7 +31,7 @@ function renderpoducts(response){
             console.log(category)
             const featured_icon = category.fields.display ? '<img width="24" height="24" src="https://img.icons8.com/color/48/checked--v1.png" alt="checked--v1"/>' : '<img width="24" height="24" src="https://img.icons8.com/color/48/cancel--v1.png" alt="cancel--v1"/>';
             var product_row = `
-                <tr data-url="{% url "dashboard" %}">
+                <tr data-url="/dashboard/category/${category.pk}">
                     <td>${category.pk}</td>
                     <td>${category.fields.name}</td>
                     <td>${category.fields.display_name}</td>
@@ -39,6 +42,7 @@ function renderpoducts(response){
             productListElement.append(product_row)
         })
     }
+    addRedirect()
 }
 
 function ajaxCall(){

@@ -110,8 +110,11 @@ def get_discount(value:str=None):
         discount = Discount.objects.all()
     return discount
 
-def get_categories():
-    categories = Category.objects.all()
+def get_categories(id:int = None):
+    if id:
+        categories = Category.objects.all().filter(category_id=id)
+    else: 
+        categories = Category.objects.all()
     return categories
 
 def get_tags(id:int=None):
@@ -163,28 +166,30 @@ def add_or_update_product(queryset):
     images = {}
     kwargs = {}
     product_id = None
+    kwargs['featured'] = False
     for key, value in queryset:
         # print(f"{key}: {value}")
-        if key == 'csrfmiddlewaretoken':
-            pass
-        elif key == 'product-id':
-            product_id = value
-        elif key=='product_name_input':
-            kwargs['name'] = value
-        elif key == 'product_cost_input':
-            kwargs['cost'] = value
-        elif key == 'product_discount_input':
-            kwargs['discount'] = get_discount(value)
-        elif key == 'product_tag_input':
-            kwargs['category'] = get_tags(value)
-        elif key == 'featured':
-            kwargs['featured'] = value
-        elif key == 'product_description_input':
-            kwargs['description'] = value
-        elif key == 'product_additional_details_input':
-            kwargs['additional_details'] = value
-        else:
-            images[key] = value
+        match key:
+            case 'csrfmiddlewaretoken':
+                pass
+            case 'product-id':
+                product_id = value
+            case 'product_name_input':
+                kwargs['name'] = value
+            case 'product_cost_input':
+                kwargs['cost'] = value
+            case 'product_discount_input':
+                kwargs['discount'] = get_discount(value)
+            case 'product_tag_input':
+                kwargs['category'] = get_tags(value)
+            case 'featured':
+                kwargs['featured'] = True
+            case 'product_description_input':
+                kwargs['description'] = value
+            case 'product_additional_details_input':
+                kwargs['additional_details'] = value
+            case _:
+                images[key] = value
             
     if product_id != None:
         product = get_products(product_id)
@@ -213,9 +218,32 @@ def add_or_update_product(queryset):
         image = get_image(imageID)
         image.delete()
 
-
-
 def clearCache():
     productImages = ProductImage.objects.all().filter(product=None)
     for image in productImages:
         image.delete()
+        
+def add_or_update_category(queryset):
+    category_id = None
+    kwargs = {}
+    kwargs['display'] = False
+    for key, value in queryset:
+        print(key,value)
+        match(key):
+            case 'csrfmiddlewaretoken':
+                pass
+            case 'category-id':
+                category_id = value
+            case 'category_name_input':
+                kwargs['name'] = value
+            case 'category_displayName_input':
+                kwargs['display_name'] = value
+            case 'category_description_input':
+                kwargs['description'] = value
+            case 'display':
+                kwargs['display'] = True
+    if category_id != None:
+        category = get_categories(category_id)
+        category.update(**kwargs)
+    else:
+        category = Category.objects.create(**kwargs)

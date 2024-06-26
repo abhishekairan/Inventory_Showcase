@@ -228,6 +228,10 @@ textarea{
     display: flex;
     gap: 20px;
     align-items: center;
+    overflow-x: auto;
+    scroll-snap-type: inline mandatory;
+    scroll-behavior: smooth;
+    
 }
 .image{
     margin: 0 20px;
@@ -272,4 +276,19 @@ textarea{
 }
 .delete .function-button{
     background: rgb(255, 55, 55);
+}
+
+
+@media (max-width: 990px){
+    .container {
+        grid-template-areas: 
+                "product_image"
+                "product_info"
+                "product_description"
+                "product_gallary"
+                "buttons";
+    }
+    .product-thumbnail-container{
+        display: block;
+    }
 }

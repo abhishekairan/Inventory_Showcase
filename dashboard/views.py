@@ -113,7 +113,36 @@ def categories(request: Request):
         'display_category': len(categories.filter(display= True)),
         'categories': categories,
     }
+    return render(request,'dashboard/categories.html',context=context)
+
+
+@login_required(login_url='login')
+def category(request: Request,id):
+    categories = get_categories(id)
+    context = {
+        'categories': categories,
+    }
     return render(request,'dashboard/category.html',context=context)
+
+@login_required(login_url='login')
+def newCategory(request: Request):
+    return render(request,'dashboard/newcategory.html')
+
+
+@login_required(login_url='login')
+def deleteCategory(request: Request,id):
+    product = get_categories(int(id))
+    product.delete()
+    # print(product)
+    return redirect('dashboard-category')
+
+
+@login_required(login_url='login')
+def addCategory(request: Request):
+    if request.method == "POST":
+        print(request.POST)
+        add_or_update_category(request.POST.items())
+    return redirect('dashboard-category')
 
 
 @login_required(login_url='login')
