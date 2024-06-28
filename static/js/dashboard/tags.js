@@ -1,5 +1,7 @@
+document.addEventListener("DOMContentLoaded", addRedirect());
 
-document.addEventListener("DOMContentLoaded", function() {
+
+function addRedirect() {
     const rows = document.querySelectorAll(".project-table tbody tr");
     // console.log(rows)
     rows.forEach(row => {
@@ -12,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
-});
+}
 
 
 
@@ -40,6 +42,7 @@ function renderpoducts(response){
             productListElement.append(product_row)
         })
     }
+    addRedirect()
 }
 
 function ajaxCall(){

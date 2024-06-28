@@ -21,18 +21,23 @@ from .views import *
 urlpatterns = [
     path('login/',login,name="login"),
     path('dashboard/',dashboard, name="dashboard"),
+    
     path('dashboard/product',products,name='dashboard-product'),
     path('dashboard/product/<str:id>',product,name='Dproduct'),
     path('dashboard/new-product',newProduct,name='Newproduct'),
     path('dashboard/delete-product/<str:id>',deleteProduct,name='DeleteProduct'),
     path('dashboard/add-product',addProduct,name='add-product'),
+    
     path('dashboard/category',categories,name='dashboard-category'),
     path('dashboard/category/<str:id>',category,name='Dcategory'),
     path('dashboard/new-category',newCategory,name='Newcategory'),
     path('dashboard/delete-category/<str:id>',deleteCategory,name='DeleteCategory'),
     path('dashboard/add-category',addCategory,name='add-category'),
+    
     path('dashboard/tags',tags,name='dashboard-tags'),
+    
     path('dashboard/user',users,name='dashboard-users'),
+    
     path('search/product/',search_product,name='search-product'),
     path('search/category/',search_category,name='search-category'),
     path('search/tags/',search_tags,name='search-tags'),

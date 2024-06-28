@@ -1,5 +1,7 @@
+document.addEventListener("DOMContentLoaded", addRedirect());
 
-document.addEventListener("DOMContentLoaded", function() {
+
+function addRedirect() {
     const rows = document.querySelectorAll(".project-table tbody tr");
     // console.log(rows)
     rows.forEach(row => {
@@ -12,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
-});
+}
 
 
 
@@ -20,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function renderpoducts(response){
     var product = Array.isArray(response) ? response : [response]
-    console.log(product)
+    // console.log(product)
     var productListElement = $('#product-list');
     productListElement.empty();
     if(JSON.parse(product[0].input_value).length > 0){
@@ -42,6 +44,7 @@ function renderpoducts(response){
             productListElement.append(product_row)
         })
     }
+    addRedirect()
 }
 
 // Ajax Call function to search
