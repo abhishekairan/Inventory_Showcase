@@ -30,7 +30,7 @@ function renderpoducts(response){
             // console.log(product)
             const featured_icon = tag.fields.display ? '<img width="24" height="24" src="https://img.icons8.com/color/48/checked--v1.png" alt="checked--v1"/>' : '<img width="24" height="24" src="https://img.icons8.com/color/48/cancel--v1.png" alt="cancel--v1"/>';
             var product_row = `
-                <tr data-url="{% url "dashboard" %}">
+                <tr data-url="/dashboard/tag/${tag.pk}">
                     <td>${tag.pk}</td>
                     <td>${tag.fields.name}</td>
                     <td>${tag.fields.display_name}</td>

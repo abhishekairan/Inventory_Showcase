@@ -156,6 +156,41 @@ def tags(request: Request):
     return render(request,'dashboard/tags/tags.html',context=context)
 
 
+@login_required(login_url='login')
+def tag(request: Request,id):
+    tags = get_tags(id)
+    categories = get_categories()
+    context = {
+        'tags': tags,
+        'categories':categories
+    }
+    return render(request,'dashboard/tags/tag.html',context=context)
+
+@login_required(login_url='login')
+def newTag(request: Request):
+    categories = get_categories()
+    context = {
+        'categories':categories
+    }
+    return render(request,'dashboard/tags/newtag.html',context=context)
+
+
+@login_required(login_url='login')
+def deleteTag(request: Request,id):
+    product = get_tags(int(id))
+    product.delete()
+    # print(product)
+    return redirect('dashboard-tags')
+
+
+@login_required(login_url='login')
+def addTag(request: Request):
+    if request.method == "POST":
+        print(request.POST)
+        add_or_update_tag(request.POST.items())
+    return redirect('dashboard-tags')
+
+
 
 @login_required(login_url='login')
 def users(request: Request):

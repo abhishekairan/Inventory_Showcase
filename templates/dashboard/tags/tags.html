@@ -42,6 +42,7 @@
     <div class="list-title">
         <div class="title">
             <h3>Tag List</h3>
+            <a href="{% url "Newtag" %}"><button>Add Tag</button></a>
         </div>
         <div class="filters">
 
@@ -78,7 +79,7 @@
         </thead>
         <tbody id="product-list">
             {% for tag in tags %}
-            <tr data-url="{% url "dashboard" %}" class="product-tr">
+            <tr data-url="{% url "Dtag" tag.category_id%}" class="product-tr">
                 <td>{{tag.category_id}}</td>
                 <td>{{tag.name}}</td>
                 <td>{{tag.display_name}}</td>

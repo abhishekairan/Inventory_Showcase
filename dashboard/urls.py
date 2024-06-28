@@ -35,6 +35,10 @@ urlpatterns = [
     path('dashboard/add-category',addCategory,name='add-category'),
     
     path('dashboard/tags',tags,name='dashboard-tags'),
+    path('dashboard/tag/<str:id>',tag,name='Dtag'),
+    path('dashboard/new-tag',newTag,name='Newtag'),
+    path('dashboard/delete-tag/<str:id>',deleteTag,name='DeleteTag'),
+    path('dashboard/add-tag',addTag,name='add-tag'),
     
     path('dashboard/user',users,name='dashboard-users'),
     

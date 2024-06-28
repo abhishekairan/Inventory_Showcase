@@ -119,7 +119,7 @@ def get_categories(id:int = None):
 
 def get_tags(id:int=None):
     if id != None:
-        tags = ProductCategory.objects.get(category_id=id)
+        tags = ProductCategory.objects.all().filter(category_id=id)
     else:
         tags = ProductCategory.objects.all()
     return tags
@@ -217,6 +217,7 @@ def add_or_update_product(queryset):
     for imageID in exsistingImage:
         image = get_image(imageID)
         image.delete()
+    return product
 
 def clearCache():
     productImages = ProductImage.objects.all().filter(product=None)
@@ -228,7 +229,7 @@ def add_or_update_category(queryset):
     kwargs = {}
     kwargs['display'] = False
     for key, value in queryset:
-        print(key,value)
+        # print(key,value)
         match(key):
             case 'csrfmiddlewaretoken':
                 pass
@@ -247,3 +248,31 @@ def add_or_update_category(queryset):
         category.update(**kwargs)
     else:
         category = Category.objects.create(**kwargs)
+    return category
+        
+def add_or_update_tag(queryset):
+    tag_id = None
+    kwargs = {}
+    kwargs['display'] = False
+    for key,value in queryset:
+        match key:
+            case 'csrfmiddlewaretoken':
+                pass
+            case 'tag-id':
+                tag_id = value
+            case 'tag_name_input':
+                kwargs['name'] = value
+            case 'tag_displayName_input':
+                kwargs['display_name'] = value
+            case 'tag_description_input':
+                kwargs['description'] = value
+            case 'tag_category':
+                kwargs['main_category'] = get_categories(int(value))[0]
+            case 'display':
+                kwargs['display'] = True
+    if tag_id != None:
+        tag = get_tags(tag_id)
+        tag.update(**kwargs)
+    else:
+        tag = ProductCategory.objects.create(**kwargs)
+    return tag
