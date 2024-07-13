@@ -2,9 +2,6 @@ from .models import Category, ProductCategory, Product, ProductImage, Discount
 from typing import Union
 from django.db.models import Q
 from django.contrib.auth.models import User
-import requests
-from io import BytesIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
 
 def get_header_template_content():
     
