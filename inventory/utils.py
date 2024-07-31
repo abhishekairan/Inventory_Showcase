@@ -116,7 +116,7 @@ def get_categories(id:int = None):
 
 def get_tags(id:int=None):
     if id != None:
-        tags = ProductCategory.objects.all().filter(category_id=id)
+        tags = ProductCategory.objects.all().filter(category_id=id)[0]
     else:
         tags = ProductCategory.objects.all()
     return tags
@@ -187,7 +187,7 @@ def add_or_update_product(queryset):
                 kwargs['additional_details'] = value
             case _:
                 images[key] = value
-            
+    print(kwargs)
     if product_id != None:
         product = get_products(product_id)
         product.update(**kwargs)
