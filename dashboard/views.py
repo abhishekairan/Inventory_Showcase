@@ -118,9 +118,9 @@ def categories(request: Request):
 
 @login_required(login_url='login')
 def category(request: Request,id):
-    categories = get_categories(id)
+    category = get_categories(id)
     context = {
-        'categories': categories,
+        'category': category,
     }
     return render(request,'dashboard/category/category.html',context=context)
 
@@ -161,7 +161,7 @@ def tag(request: Request,id):
     tags = get_tags(id)
     categories = get_categories()
     context = {
-        'tags': tags,
+        'tag': tags,
         'categories':categories
     }
     return render(request,'dashboard/tags/tag.html',context=context)

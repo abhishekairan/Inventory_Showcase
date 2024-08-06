@@ -10,7 +10,6 @@
 <form action="{% url "add-tag" %}" method="POST">
     {% csrf_token %}
     <div class="container">
-        {% for tag in tags %}
         <input type="text" name="tag-id" value="{{tag.category_id}}" class="dlt-btn">
         <div class="category-info">
             <div class="product-name">
@@ -65,7 +64,6 @@
         </div>
 
         {% comment %} <script>console.log('{{product.thumbnail_image}}')</script> {% endcomment %}
-        {% endfor %}
     </form>
 </div>
 {% endblock %}

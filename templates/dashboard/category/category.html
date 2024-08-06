@@ -10,7 +10,6 @@
 <form action="{% url "add-category" %}" method="POST">
     {% csrf_token %}
     <div class="container">
-        {% for category in categories %}
         <input type="text" name="category-id" value="{{category.category_id}}" class="dlt-btn">
         <div class="category-info">
             <div class="product-name">
@@ -52,7 +51,6 @@
         </div>
 
         {% comment %} <script>console.log('{{product.thumbnail_image}}')</script> {% endcomment %}
-        {% endfor %}
     </form>
 </div>
 {% endblock %}

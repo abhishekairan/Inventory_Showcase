@@ -88,7 +88,7 @@ def get_searched_product_context(search_query,featured=None):
 
 def get_products(id:int=None):
     if id != None:
-        products = Product.objects.filter(product_id = id)
+        products = Product.objects.filter(product_id = id)[0]
     else:
         products = Product.objects.all()
     return products
@@ -109,7 +109,7 @@ def get_discount(value:str=None):
 
 def get_categories(id:int = None):
     if id:
-        categories = Category.objects.all().filter(category_id=id)
+        categories = Category.objects.all().filter(category_id=id)[0]
     else: 
         categories = Category.objects.all()
     return categories
@@ -264,7 +264,7 @@ def add_or_update_tag(queryset):
             case 'tag_description_input':
                 kwargs['description'] = value
             case 'tag_category':
-                kwargs['main_category'] = get_categories(int(value))[0]
+                kwargs['main_category'] = get_categories(int(value))
             case 'display':
                 kwargs['display'] = True
     if tag_id != None:
