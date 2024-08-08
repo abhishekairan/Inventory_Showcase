@@ -88,7 +88,7 @@ def get_searched_product_context(search_query,featured=None):
 
 def get_products(id:int=None):
     if id != None:
-        products = Product.objects.filter(product_id = id)[0]
+        products = Product.objects.filter(product_id = id)
     else:
         products = Product.objects.all()
     return products
@@ -109,14 +109,14 @@ def get_discount(value:str=None):
 
 def get_categories(id:int = None):
     if id:
-        categories = Category.objects.all().filter(category_id=id)[0]
+        categories = Category.objects.all().filter(category_id=id)
     else: 
         categories = Category.objects.all()
     return categories
 
 def get_tags(id:int=None):
     if id != None:
-        tags = ProductCategory.objects.all().filter(category_id=id)[0]
+        tags = ProductCategory.objects.all().filter(category_id=id)
     else:
         tags = ProductCategory.objects.all()
     return tags
@@ -178,7 +178,7 @@ def add_or_update_product(queryset):
             case 'product_discount_input':
                 kwargs['discount'] = get_discount(value)
             case 'product_tag_input':
-                kwargs['category'] = get_tags(value)
+                kwargs['category'] = get_tags(value)[0]
             case 'featured':
                 kwargs['featured'] = True
             case 'product_description_input':
@@ -187,7 +187,7 @@ def add_or_update_product(queryset):
                 kwargs['additional_details'] = value
             case _:
                 images[key] = value
-    print(kwargs)
+    # print(kwargs)
     if product_id != None:
         product = get_products(product_id)
         product.update(**kwargs)
@@ -264,7 +264,7 @@ def add_or_update_tag(queryset):
             case 'tag_description_input':
                 kwargs['description'] = value
             case 'tag_category':
-                kwargs['main_category'] = get_categories(int(value))
+                kwargs['main_category'] = get_categories(int(value))[0]
             case 'display':
                 kwargs['display'] = True
     if tag_id != None:

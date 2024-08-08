@@ -118,7 +118,7 @@ def categories(request: Request):
 
 @login_required(login_url='login')
 def category(request: Request,id):
-    category = get_categories(id)
+    category = get_categories(id)[0]
     context = {
         'category': category,
     }
@@ -158,7 +158,7 @@ def tags(request: Request):
 
 @login_required(login_url='login')
 def tag(request: Request,id):
-    tags = get_tags(id)
+    tags = get_tags(id)[0]
     categories = get_categories()
     context = {
         'tag': tags,
