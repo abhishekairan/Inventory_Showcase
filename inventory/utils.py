@@ -93,8 +93,10 @@ def get_products(id:int=None):
         products = Product.objects.all()
     return products
 
-def get_discount(value:str=None):
-    if value != None:
+def get_discount(value:str=None,id:int=None):
+    if id != None:
+        discount = Discount.objects.filter(id=id)
+    elif value != None:
         newvalue = value.replace('%'," %").replace('₹',"₹ ").split()
         if(newvalue[0]=='₹'):
             discounttype = newvalue[0]
@@ -148,6 +150,16 @@ def get_searched_tags_context(search_query,display=None):
         tags = tags.filter(display=display)
         # print('Products got filtered by featured')
     return tags
+
+def get_searched_discounts_context(search_query,display=None):
+    discounts = Discount.objects.all()
+    # print(display)
+    if search_query!=None:
+        discounts = discounts.filter(value__icontains=search_query)
+    if display in ['₹','%']:
+        discounts = discounts.filter(discountType=display)
+        # print('Products got filtered by featured')
+    return discounts
 
 def get_searched_users_context(search_query,display=None):
     users = User.objects.all()
@@ -273,3 +285,23 @@ def add_or_update_tag(queryset):
     else:
         tag = ProductCategory.objects.create(**kwargs)
     return tag
+
+def add_or_update_discount(queryset):
+    discount_id = None
+    kwargs = {}
+    for key,value in queryset:
+        match key:
+            case 'csrfmiddlewaretoken':
+                pass
+            case 'tag-id':
+                discount_id = value
+            case 'tag_name_input':
+                kwargs['value'] = value
+            case 'tag_category':
+                kwargs['discountType'] = value
+    if discount_id != None:
+        discount = get_discount(id=discount_id)
+        discount.update(**kwargs)
+    else:
+        discount = Discount.objects.create(**kwargs)
+    return discount

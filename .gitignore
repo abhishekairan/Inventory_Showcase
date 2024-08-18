@@ -50,3 +50,5 @@ package.nls.*.json
 l10n/
 python-env-tools/**
 *.sqlite3
+db.sqlite3
+/static/images

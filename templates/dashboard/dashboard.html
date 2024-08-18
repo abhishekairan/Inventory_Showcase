@@ -76,6 +76,18 @@
                     <h3>{{user_count}}</h3>
                 </div>
             </div></a>
+            <a href="{% url "dashboard-discount" %}">
+            <div class="card">
+                <div class="card-icon">
+                    <span class="icon"><img width="100" height="100" src="https://img.icons8.com/ios/100/FD7E14/discount--v1.png" alt="discount--v1" alt="user--v1"/></span> 
+                </div>
+                <div class="card-title">
+                    <h2>Total Discounts</h2>
+                </div>
+                <div class="card-info">
+                    <h3>{{discount_count}}</h3>
+                </div>
+            </div></a>
         </div>
         {% endblock dashboard-containt %}
     </main>

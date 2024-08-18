@@ -40,11 +40,19 @@ urlpatterns = [
     path('dashboard/delete-tag/<str:id>',deleteTag,name='DeleteTag'),
     path('dashboard/add-tag',addTag,name='add-tag'),
     
+    
+    path('dashboard/discounts',discounts,name='dashboard-discount'),
+    path('dashboard/discount/<str:id>',discount,name='Ddiscount'),
+    path('dashboard/new-discount',newDiscount,name='Newdiscount'),
+    path('dashboard/delete-discount/<str:id>',deleteDiscount,name='DeleteDiscount'),
+    path('dashboard/add-discount',addDiscount,name='add-discount'),
+    
     path('dashboard/user',users,name='dashboard-users'),
     
     path('search/product/',search_product,name='search-product'),
     path('search/category/',search_category,name='search-category'),
     path('search/tags/',search_tags,name='search-tags'),
+    path('search/discounts/',search_discounts,name='search-discounts'),
     path('search/users/',search_users,name='search-users'),
     path('add-product-image/', add_product_image, name='add-product-image'),
 ]

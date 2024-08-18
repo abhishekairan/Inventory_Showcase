@@ -1,0 +1,56 @@
+{% extends "dashboard/dashboard.html" %}
+
+{% block link %}
+{% load static %}
+<link rel="stylesheet" href="{% static "css/dashboard/category.css" %}">
+<link rel="stylesheet" href="{% static "css/dashboard/product.css" %}">
+{% endblock link %}
+
+{% block dashboard-containt %}
+<form action="{% url "add-discount" %}" method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <input type="text" name="tag-id" value="{{discount.id}}" class="dlt-btn">
+        <div class="category-info">
+            <div class="product-name">
+                <h3>Value:</h3>
+                <input type="text" name="tag_name_input" id="tag_name_input" value={{discount.value}} class="input" required>
+            </div>
+            <div class="product-tag">
+                <h3>Type</h3>
+                <select name="tag_category" id="tag_category" class="input">
+                    <option value="{{discount.main_category.category_id}}" disabled selected>{{discount.main_category}}</option>
+                    {% if discount.discountType == '%'  %}
+                    <option value="%" selected>%</option>
+                    {% else %}
+                    <option value="%">%</option>
+                    {% endif %}
+                    {% if discount.discountType == '₹'  %}
+                    <option value="₹" selected>₹</option>
+                    {% else %}
+                    <option value="₹">₹</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="function-buttons-container">
+            <div class="delete">
+                <a href="{% url "DeleteDiscount" discount.id%}"><button type="button" class="function-button">Delete</button></a>
+            </div>
+            <div class="discard">
+                <a href="{% url "dashboard-tags" %}"><button type="button" class="function-button">Discard</button></a>
+            </div>
+            <div class="save">
+                <button type="submit" class="function-button">Save</button>
+            </div>
+        </div>
+
+        {% comment %} <script>console.log('{{product.thumbnail_image}}')</script> {% endcomment %}
+    </form>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static "js/dashboard/category.js" %}"></script>
+{% endblock script %}

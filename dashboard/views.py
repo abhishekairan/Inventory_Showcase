@@ -43,11 +43,13 @@ def dashboard(request):
     category_count = get_categories().count()
     tags_count = get_tags().count()
     user_count = get_users().count()
+    discount_count = get_discount().count()
     context = {
         'product_count': product_count,
         'category_count': category_count,
         'tags_count': tags_count,
         'user_count': user_count,
+        'discount_count': discount_count,
     }
     clearCache()
     return render(request, 'dashboard/dashboard.html',context=context)
@@ -145,6 +147,50 @@ def addCategory(request: Request):
     return redirect('dashboard-category')
 
 
+# Discount Functions
+
+@login_required(login_url='login')
+def discounts(request: Request):
+    discounts = get_discount()
+    context = {
+        'discount_count': len(discounts),
+        # 'display_tags': len(tags.filter(display= True)),
+        'discounts': discounts,
+    }
+    return render(request,'dashboard/discount/discounts.html',context=context)
+
+
+@login_required(login_url='login')
+def discount(request: Request,id):
+    discounts = get_discount(id=id)[0]
+    context = {
+        'discount': discounts,
+    }
+    return render(request,'dashboard/discount/discount.html',context=context)
+
+@login_required(login_url='login')
+def newDiscount(request: Request):
+    return render(request,'dashboard/discount/newDiscount.html')
+
+
+@login_required(login_url='login')
+def deleteDiscount(request: Request,id):
+    discount = get_discount(id=id)
+    discount.delete()
+    # print(product)
+    return redirect('dashboard-discount')
+
+
+@login_required(login_url='login')
+def addDiscount(request: Request):
+    if request.method == "POST":
+        print(request.POST)
+        add_or_update_discount(request.POST.items())
+    return redirect('dashboard-discount')
+
+
+# Tags Functions
+
 @login_required(login_url='login')
 def tags(request: Request):
     tags = get_tags()
@@ -191,6 +237,7 @@ def addTag(request: Request):
     return redirect('dashboard-tags')
 
 
+# User functions
 
 @login_required(login_url='login')
 def users(request: Request):
@@ -203,6 +250,7 @@ def users(request: Request):
     return render(request,'dashboard/user/users.html',context=context)
 
 
+# Search Functions
 
 def search_product(request: Request):
     if request.method == "POST":
@@ -242,6 +290,20 @@ def search_tags(request: Request):
         response_data={
             'message':'success',
             'input_value': serialize('json',category)
+        }
+        return JsonResponse(response_data,safe=False)
+
+
+def search_discounts(request: Request):
+    if request.method == "POST":
+        search_query = request.POST.get('inputval')
+        display = request.POST.get('featuredval')
+        # print(search_query)
+        # print(display)
+        discount = get_searched_discounts_context(search_query,display)
+        response_data={
+            'message':'success',
+            'input_value': serialize('json',discount)
         }
         return JsonResponse(response_data,safe=False)
     

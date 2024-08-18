@@ -1,0 +1,51 @@
+{% extends "dashboard/dashboard.html" %}
+
+{% block link %}
+{% load static %}
+<link rel="stylesheet" href="{% static "css/dashboard/category.css" %}">
+<link rel="stylesheet" href="{% static "css/dashboard/product.css" %}">
+{% endblock link %}
+
+{% block dashboard-containt %}
+<form action="{% url "add-discount" %}" method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <div class="category-info">
+            <div class="product-name">
+                <h3>Value:</h3>
+                <input type="text" name="tag_name_input" id="tag_name_input" placeholder="Value" class="input" required>
+            </div>
+            <div class="product-tag">
+                <h3>Type</h3>
+                <select name="tag_category" id="tag_category" class="input" required>
+                    <option value="" disabled selected>Select Discount Type</option>
+                    <option value="%">%</option>
+                    <option value="₹">₹</option>
+                </select>
+            </div>
+            <div class="product-featured">
+                <h3>Display</h3>
+                <label class="toggle-switch">
+                    <input type="checkbox" name="display">
+                    <div class="toggle-switch-background">
+                    <div class="toggle-switch-handle"></div>
+                    </div>
+                </label>              
+            </div>
+        </div>
+        <div class="function-buttons-container">
+            <div class="discard">
+                <a href="{% url "dashboard-category" %}"><button type="button" class="function-button">Discard</button></a>
+            </div>
+            <div class="save">
+                <button type="submit" class="function-button">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static "js/dashboard/tag.js" %}"></script>
+{% endblock script %}
